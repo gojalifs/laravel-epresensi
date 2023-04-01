@@ -11,7 +11,7 @@ class RevisiRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class RevisiRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_nik' => 'required',
+            'tanggal' => 'required',
+            'jam' => 'required',
+            'alasan' => 'required'
         ];
     }
 }

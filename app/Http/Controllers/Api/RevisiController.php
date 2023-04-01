@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RevisiRequest;
+use App\Http\Resources\RevisiResource;
 use App\Models\RevisiAbsen;
 use Illuminate\Http\Request;
 
@@ -19,9 +21,10 @@ class RevisiController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(RevisiRequest $request)
     {
-        //
+        $data = new RevisiResource(RevisiAbsen::create($request->validated()));
+        return $this->sendResponse($data, 'revisi sukses diajukan');
     }
 
     /**
@@ -35,9 +38,9 @@ class RevisiController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RevisiAbsen $revisiAbsen)
+    public function update(RevisiRequest $request, RevisiAbsen $revisiAbsen)
     {
-        //
+        
     }
 
     /**

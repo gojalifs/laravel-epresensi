@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AbsenController;
 use App\Http\Controllers\Api\IzinKeluarController;
 use App\Http\Controllers\Api\PresensiController;
+use App\Http\Controllers\Api\RevisiController;
 use App\Models\Ketidakhadiran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,3 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('izink', IzinKeluarController::class);
 Route::apiResource('absen', AbsenController::class);
 Route::apiResource('presen', PresensiController::class);
+Route::apiResource('revisi', RevisiController::class);
+

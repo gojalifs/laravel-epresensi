@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class RevisiAbsen extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_nik',
+        'tanggal',
+        'jam',
+        'alasan'
+    ];
 }

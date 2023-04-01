@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->date('tanggal');
             $table->time('jam');
             $table->string('alasan', 100);
+            $table->tinyInteger('is_approved')->default(0);
             $table->timestamps();
         });
     }
