@@ -10,7 +10,7 @@ class Password extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nik',
+        'user_nik',
         'pass',
     ];
 }
