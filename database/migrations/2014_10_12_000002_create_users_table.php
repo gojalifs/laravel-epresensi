@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('gender', ['L', 'P']);
             $table->string('telp', 18)->unique();
             $table->tinyInteger('is_admin')->default(0);
+            $table->string('ava_path');
             $table->string('token', 128)->nullable();
             $table->dateTime('token_expiry')->nullable();
             $table->rememberToken();

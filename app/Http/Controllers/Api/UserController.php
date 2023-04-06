@@ -138,10 +138,21 @@ class UserController extends Controller
         return response()->json([
             'status' => 'success',
             'data' => [
-                'user' => $user,
+                'id' => $user->id,
+                'nik' => $user->nik,
+                'nama' => $user->nama,
+                'nipns' => $user->nipns,
+                'email' => $user->email,
+                'gender' => $user->gender,
+                'telp' => $user->telp,
+                'isAdmin' => $user->is_admin,
+                'avaPath' => $user->ava_path,
                 'token' => $token,
-                'token_type' => 'Bearer'
+                'tokenExpiry' => null,
+                'createdAt' => $user->created_at,
+                'updatedAt' => $user->updated_at
             ],
+            'token_type' => 'Bearer'
         ]);
     }
 
