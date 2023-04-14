@@ -18,6 +18,7 @@ class PresensiResource extends JsonResource
             'id' => $this->id,
             'nik' => $this->nik,
             'date' => $this->tanggal,
+            'details' => PresensiDetailResource::collection($this->details),
         ];
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         Schema::create('presensi_details', function (Blueprint $table) {
             $table->id();
-            $table->string('id_presensi', 10);
+            $table->string('id_presensi', 30);
             $table->foreign('id_presensi')->references('id_presensi')->on('presensis')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();

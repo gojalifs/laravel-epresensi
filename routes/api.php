@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AbsenController;
 use App\Http\Controllers\Api\IzinKeluarController;
 use App\Http\Controllers\Api\PresensiController;
 use App\Http\Controllers\Api\RevisiController;
+use App\Http\Controllers\Api\TodayPresention;
 use App\Http\Controllers\Api\UserController;
 use App\Models\Ketidakhadiran;
 use Illuminate\Http\Request;
@@ -29,6 +30,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('absen', AbsenController::class);
     Route::apiResource('presen', PresensiController::class);
     Route::apiResource('revisi', RevisiController::class);
+    Route::post('/daily', [TodayPresention::class, 'getTodayPresention']);
+    Route::post('/dailycount', [TodayPresention::class, 'presentCount']);
     Route::get('logout', [UserController::class, 'logout']);
 });
 

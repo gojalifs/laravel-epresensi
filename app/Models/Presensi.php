@@ -13,4 +13,9 @@ class Presensi extends Model
         'nik',
         'tanggal',
     ];
+
+    public function details()
+    {
+        return $this->hasMany(PresensiDetail::class, 'id_presensi', 'id_presensi');
+    }
 }
