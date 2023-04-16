@@ -46,7 +46,7 @@ class PresensiController extends Controller
         $filename = $nik . '_' . $tanggal . '_' . $jenis . '.' . $extension;
         // Menyimpan file gambar dengan nama yang sudah diformat
         $img_path = $file->storeAs('public/img', $filename);
-
+        $newImgPath = str_replace('public/', '', $img_path);
 
 
         $presensi = DB::table('presensis')->where([
@@ -79,7 +79,7 @@ class PresensiController extends Controller
         // $stmt->bindParam(4, $jam, PDO::PARAM_STR);
         $stmt->bindParam(3, $longitude, PDO::PARAM_STR);
         $stmt->bindParam(4, $latitude, PDO::PARAM_STR);
-        $stmt->bindParam(5, $img_path, PDO::PARAM_STR);
+        $stmt->bindParam(5, $newImgPath, PDO::PARAM_STR);
         $stmt->execute();
         $result = [];
 
@@ -109,10 +109,7 @@ class PresensiController extends Controller
             'details' => $result
         ]);
         return $this->sendResponse(array_values($result), 'success');
-        return response()->json([
-            'message' => 'cart added successfully',
-            'status' => true
-        ]);
+
         // } catch (Exception $e){
         //     return $this->sendError($e, 'Something error on the server');
         // }

@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\Password;
 use App\Models\User;
 use Auth;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -178,9 +178,29 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function updateUser(Request $request)
     {
-        //
+        $nik = $request->nik;
+        $column = $request->column;
+        $data = $request->data;
+
+        $sql = "UPDATE users SET $column = ? WHERE nik = ?";
+        $params = [$data, $nik];
+        $affectedRows = DB::update($sql, $params); 
+
+        if ($affectedRows == 0) {
+            return response()->json([
+                'success' => false,
+                'message' => 'No data updated or user not found'
+            ]);
+
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'User updated successfully'
+            ]);
+        }
+
     }
 
     /**
