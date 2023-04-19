@@ -22,6 +22,7 @@ class IzinKeluarRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'alasan' => 'required',
             'tanggal' => 'required',
             'user_nik' => 'required',
             'jam_keluar' => 'required',

@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->foreign('nik')->references('nik')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->date('tanggal');
+            $table->date('tanggal_selesai')->nullable();
             $table->string('alasan', 100);
             $table->String('potong_cuti')->default('tidak');
             $table->timestamps();

@@ -133,7 +133,9 @@ class UserController extends Controller
             ], 401);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken('auth_token');
+        $tokenValue = $token->plainTextToken;
+        // $expire_at = $token->expires_at;
 
         return response()->json([
             'status' => 'success',
@@ -147,7 +149,7 @@ class UserController extends Controller
                 'telp' => $user->telp,
                 'isAdmin' => $user->is_admin,
                 'avaPath' => $user->ava_path,
-                'token' => $token,
+                'token' => $tokenValue,
                 'tokenExpiry' => null,
                 'createdAt' => $user->created_at,
                 'updatedAt' => $user->updated_at
@@ -175,6 +177,37 @@ class UserController extends Controller
         //
     }
 
+    public function loginStatus(Request $request)
+    {
+        return $this->sendResponse(null, 'authenticated');
+        // Get the currently authenticated user
+        $user = Auth::user();
+
+        // Get the personal access token for the user
+        $tokens = $user->tokens;
+
+        // Get the token value from the request headers
+        $provided_token_value = $request->header('Authorization');
+
+        // Remove the "Bearer " prefix from the token value
+        $provided_token_value = str_replace('Bearer ', '', $provided_token_value);
+
+        // Loop through the tokens and check if the provided value matches
+        $valid_token = false;
+        foreach ($tokens as $token) {
+            if ($token->id === $provided_token_value) {
+                $valid_token = true;
+                break;
+            }
+        }
+        // Check if the token value matches the provided value
+        if ($valid_token) {
+            echo 'The token is valid and has not been changed.';
+        } else {
+            echo 'The token is not valid or has been changed.';
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -184,23 +217,102 @@ class UserController extends Controller
         $column = $request->column;
         $data = $request->data;
 
-        $sql = "UPDATE users SET $column = ? WHERE nik = ?";
-        $params = [$data, $nik];
-        $affectedRows = DB::update($sql, $params); 
+        $sqlFind = "SELECT nik FROM users WHERE nik = ?";
+        $params = [$nik];
+        $findResult = DB::select($sqlFind, $params);
+
+        if (count($findResult) === 1) {
+
+
+            $sql = "UPDATE users SET $column = ? WHERE nik = ?";
+            $params = [$data, $nik];
+            $affectedRows = DB::update($sql, $params);
+
+            if ($affectedRows == 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No data updated'
+                ]);
+
+            } else {
+                $user = User::where('nik', $request->nik)->first();
+                return response()->json([
+                    'success' => true,
+                    'message' => 'User updated successfully',
+                    'data' => [
+                        'id' => $user->id,
+                        'nik' => $user->nik,
+                        'nama' => $user->nama,
+                        'nipns' => $user->nipns,
+                        'email' => $user->email,
+                        'gender' => $user->gender,
+                        'telp' => $user->telp,
+                        'isAdmin' => $user->is_admin,
+                        'avaPath' => $user->ava_path,
+                        'token' => $request->bearerToken(),
+                        'tokenExpiry' => null,
+                        'createdAt' => $user->created_at,
+                        'updatedAt' => $user->updated_at
+                    ],
+                    'token_type' => 'Bearer'
+                ]);
+            }
+
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'nik not found'
+            ]);
+
+        }
+
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $nik = $request->nik;
+
+        // Mendapatkan file gambar yang diupload
+        $file = $request->file('img');
+        $extension = $file->getClientOriginalExtension();
+        // Memformat nama file
+        $filename = $nik . '_' . date("His") . '.' . $extension;
+        // Menyimpan file gambar dengan nama yang sudah diformat
+        $img_path = $file->storeAs('public/img/ava', $filename);
+        $newImgPath = str_replace('public/', '', $img_path);
+
+        $sql = "UPDATE users SET ava_path = ? WHERE nik = ?";
+        $params = [$newImgPath, $nik];
+        $affectedRows = DB::update($sql, $params);
 
         if ($affectedRows == 0) {
             return response()->json([
                 'success' => false,
-                'message' => 'No data updated or user not found'
-            ]);
-
-        } else {
-            return response()->json([
-                'success' => true,
-                'message' => 'User updated successfully'
+                'message' => 'No data updated'
             ]);
         }
 
+        $user = User::where('nik', $request->nik)->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Avatar updated' . $newImgPath,
+            'data' => [
+                'id' => $user->id,
+                'nik' => $user->nik,
+                'nama' => $user->nama,
+                'nipns' => $user->nipns,
+                'email' => $user->email,
+                'gender' => $user->gender,
+                'telp' => $user->telp,
+                'isAdmin' => $user->is_admin,
+                'avaPath' => $user->ava_path,
+                'token' => $request->bearerToken(),
+                'tokenExpiry' => null,
+                'createdAt' => $user->created_at,
+                'updatedAt' => $user->updated_at
+            ],
+        ]);
     }
 
     /**

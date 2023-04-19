@@ -34,6 +34,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/dailycount', [TodayPresention::class, 'presentCount']);
     Route::post('/dailyreport', [Reporting::class, 'getDailyReport']);
     Route::post('/updateuser', [UserController::class, 'updateUser']);
+    Route::post('/updateava', [UserController::class, 'updateAvatar']);
+    Route::post('user/checkstatus', [UserController::class, 'loginStatus']);
     Route::get('logout', [UserController::class, 'logout']);
 });
 
