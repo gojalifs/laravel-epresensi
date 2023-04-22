@@ -13,6 +13,7 @@ class RevisiAbsen extends Model
         'user_nik',
         'tanggal',
         'jam',
+        'direvisi',
         'alasan'
     ];
 }
