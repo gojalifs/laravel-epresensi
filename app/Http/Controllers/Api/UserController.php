@@ -34,9 +34,7 @@ class UserController extends Controller
             'email' => 'required|string|email|unique:users|max:255',
             'gender' => 'required|in:L,P',
             'telp' => 'required|string|unique:users|max:18',
-            'password' => 'required|string|min:8|confirmed',
-            'token' => 'nullable|string|max:128',
-            'token_expiry' => 'nullable|date',
+            'password' => 'required|string|min:8',
         ]);
 
         // get last user created at
@@ -318,8 +316,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
-    {
-        //
-    }
+    public function destroy(Request $request, User $user)
+{
+    $user->delete();
+    return response()->json([
+        'success' => true,
+        'message' => 'User deleted successfully',
+    ]);
+}
+
 }

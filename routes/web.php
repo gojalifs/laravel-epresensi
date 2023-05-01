@@ -13,14 +13,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 Route::get('/cona', function () {
     return view('auth.login');
 });
-Route::get('/login', function () {
-    return view('auth.login');
+Route::get('/mlogin', function () {
+    return view('layouts.mlogin');
 });
 
-// Route::post('/login', 'Auth\LoginController@login')->name('login');
+Auth::routes();
+
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/dashboard', [App\Http\Controllers\web\DashboardController::class, 'index']);
+Route::get('/users-list', [App\Http\Controllers\web\WebUserController::class, 'index'])->name('users-list');
+Route::post('/users/search', [App\Http\Controllers\web\WebUserController::class, 'search'])->name('users.search');
+Route::post('/users/add', [App\Http\Controllers\Api\UserController::class, 'store'])->name('users.add');
+Route::post('/users/update', [App\Http\Controllers\web\WebUserController::class, 'updateUser'])->name('users.update');
+Route::delete('/users/delete', [App\Http\Controllers\web\WebUserController::class, 'delete'])->name('users.delete');
+Route::get('/cuti', [App\Http\Controllers\web\CutiController::class, 'index']);
+Route::get('/keluar', [App\Http\Controllers\web\IzinKeluarController::class, 'index']);
+Route::get('/kehadiran', [App\Http\Controllers\web\KehadiranController::class, 'index']);
+Route::get('/revisi', [App\Http\Controllers\web\RevisiController::class, 'index']);
+

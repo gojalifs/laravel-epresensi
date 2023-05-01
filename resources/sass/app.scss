@@ -1,0 +1,28 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+.wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  #content-wrapper {
+    width: 100%;
+  }
+  
+  @media (min-width: 992px) {
+    .wrapper {
+      width: 100%;
+    }
+    #content-wrapper {
+      width: calc(100% - 250px);
+      margin-left: 250px;
+    }
+  }
+  
