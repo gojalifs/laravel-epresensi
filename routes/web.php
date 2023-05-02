@@ -35,6 +35,7 @@ Route::post('/users/update', [App\Http\Controllers\web\WebUserController::class,
 Route::delete('/users/delete', [App\Http\Controllers\web\WebUserController::class, 'delete'])->name('users.delete');
 Route::get('/cuti', [App\Http\Controllers\web\CutiController::class, 'index']);
 Route::get('/keluar', [App\Http\Controllers\web\IzinKeluarController::class, 'index']);
-Route::get('/kehadiran', [App\Http\Controllers\web\KehadiranController::class, 'index']);
+Route::get('/presensi', [App\Http\Controllers\web\PresensiController::class, 'index']);
+Route::get('/presensi-act', [App\Http\Controllers\web\PresensiController::class, 'action']);
 Route::get('/revisi', [App\Http\Controllers\web\RevisiController::class, 'index']);
 

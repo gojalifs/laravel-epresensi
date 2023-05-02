@@ -33,7 +33,8 @@
                             <td>{{ $revisi->alasan }}</td>
                             <td>{{ $revisi->is_approved == 1 ? 'Disetujui' : 'Belum Disetujui' }}</td>
                             <td>
-                                <a href="#" class="btn btn-primary">Edit</a>
+                                <a href="#" class="btn btn-primary">Setujui</a>
+                                <a href="#" class="btn btn-primary">Tolak</a>
                                 <a href="#" class="btn btn-danger">Delete</a>
                             </td>
                         </tr>
