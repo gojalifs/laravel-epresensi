@@ -38,4 +38,5 @@ Route::get('/keluar', [App\Http\Controllers\web\IzinKeluarController::class, 'in
 Route::get('/presensi', [App\Http\Controllers\web\PresensiController::class, 'index']);
 Route::get('/presensi-act', [App\Http\Controllers\web\PresensiController::class, 'action']);
 Route::get('/revisi', [App\Http\Controllers\web\RevisiController::class, 'index']);
-
+Route::post('/revisi/{id}', [App\Http\Controllers\web\RevisiController::class, 'update'])->name('revisi.update');
+Route::delete('/revisi/{id}', [App\Http\Controllers\web\RevisiController::class, 'destroy']);
