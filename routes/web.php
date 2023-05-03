@@ -34,9 +34,13 @@ Route::post('/users/add', [App\Http\Controllers\Api\UserController::class, 'stor
 Route::post('/users/update', [App\Http\Controllers\web\WebUserController::class, 'updateUser'])->name('users.update');
 Route::delete('/users/delete', [App\Http\Controllers\web\WebUserController::class, 'delete'])->name('users.delete');
 Route::get('/cuti', [App\Http\Controllers\web\CutiController::class, 'index']);
-Route::get('/keluar', [App\Http\Controllers\web\IzinKeluarController::class, 'index']);
 Route::get('/presensi', [App\Http\Controllers\web\PresensiController::class, 'index']);
 Route::get('/presensi-act', [App\Http\Controllers\web\PresensiController::class, 'action']);
+
 Route::get('/revisi', [App\Http\Controllers\web\RevisiController::class, 'index']);
 Route::post('/revisi/{id}', [App\Http\Controllers\web\RevisiController::class, 'update'])->name('revisi.update');
 Route::delete('/revisi/{id}', [App\Http\Controllers\web\RevisiController::class, 'destroy']);
+
+Route::get('/keluar', [App\Http\Controllers\web\IzinKeluarController::class, 'index']);
+Route::post('/izinkeluar/{id}', [App\Http\Controllers\web\IzinKeluarController::class, 'update'])->name('revisi.update');
+Route::delete('/izinkeluar/{id}', [App\Http\Controllers\web\IzinKeluarController::class, 'destroy']);

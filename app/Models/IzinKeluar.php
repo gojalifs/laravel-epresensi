@@ -16,6 +16,6 @@ class IzinKeluar extends Model
         'jam_keluar',
         'jam_kembali',
         'is_approved',
-        'approval_id',
+        'approval',
     ];
 }
