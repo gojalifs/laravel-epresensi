@@ -44,3 +44,7 @@ Route::delete('/revisi/{id}', [App\Http\Controllers\web\RevisiController::class,
 Route::get('/keluar', [App\Http\Controllers\web\IzinKeluarController::class, 'index']);
 Route::post('/izinkeluar/{id}', [App\Http\Controllers\web\IzinKeluarController::class, 'update'])->name('revisi.update');
 Route::delete('/izinkeluar/{id}', [App\Http\Controllers\web\IzinKeluarController::class, 'destroy']);
+
+Route::get('/ketidakhadiran', [App\Http\Controllers\web\KetidakhadiranController::class, 'index']);
+Route::post('/ketidakhadiran/{id}', [App\Http\Controllers\web\KetidakhadiranController::class, 'update'])->name('revisi.update');
+Route::delete('/ketidakhadiran/{id}', [App\Http\Controllers\web\KetidakhadiranController::class, 'destroy']);

@@ -85,18 +85,18 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="kehadiran" class="nav-link">
-                                <i class="nav-icon fas fa-clock"></i>
+                            <a href="users-list" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Data Kehadiran
+                                    Data Guru & Karyawan
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="user-list" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
+                            <a href="presensi" class="nav-link">
+                                <i class="nav-icon fas fa-clock"></i>
                                 <p>
-                                    Data Guru & Karyawan
+                                    Data Kehadiran
                                 </p>
                             </a>
                         </li>
@@ -125,10 +125,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="cuti" class="nav-link">
+                            <a href="ketidakhadiran" class="nav-link">
                                 <i class="nav-icon fas fa-calendar-times"></i>
                                 <p>
-                                    Data Cuti
+                                    Data Izin dan Cuti
                                 </p>
                             </a>
                         </li>

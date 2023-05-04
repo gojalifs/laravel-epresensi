@@ -10,7 +10,7 @@ class RevisiController extends Controller
 {
     public function index()
     {
-        $revisian = RevisiAbsen::all();
+        $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
         return view('content.revisi')->with('revisian', $revisian);
     }
 
@@ -32,7 +32,7 @@ class RevisiController extends Controller
 
             $revisi->save();
 
-            $revisian = RevisiAbsen::all();
+            $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
             // return success message
             return view('content.revisi')->with('revisian', $revisian);
 
@@ -47,7 +47,7 @@ class RevisiController extends Controller
             $revisi = RevisiAbsen::findOrFail($id);
             $revisi->delete();
 
-            $revisian = RevisiAbsen::all();
+            $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
             // return success message
             return view('content.revisi')->with('revisian', $revisian);
         } catch (\Exception $e) {

@@ -1,11 +1,11 @@
 @section('title')
-    <h1>Daftar Permintaan Izin Keluar</h1>
+    <h1>Daftar Permintaan ketidakhadiran</h1>
 @stop
 
 @section('user-content')
     <div class="card" id="body">
         <div class="card-header">
-            <h3 class="card-title">Permintaan Izin Keluar</h3>
+            <h3 class="card-title">Permintaan ketidakhadiran</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -13,29 +13,31 @@
                 <thead>
                     <tr>
                         <th>NIK</th>
-                        <th>Tanggal</th>
-                        <th>Jam Keluar</th>
-                        <th>Jam Kembali</th>
+                        <th>Tanggal Mulai</th>
+                        <th>Tanggal Selesai</th>
                         <th>Alasan</th>
+                        <th>Potong Cuti?</th>
                         <th>Disetujui?</th>
                         <th>Approval</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($izin_keluars as $keluar)
+                    @foreach ($ketidakhadiran as $ketidakhadiran)
                         <tr>
-                            <td>{{ $keluar->user_nik }}</td>
-                            <td>{{ $keluar->tanggal }}</td>
-                            <td>{{ $keluar->jam_keluar }}</td>
-                            <td>{{ $keluar->jam_kembali }}</td>
-                            <td>{{ $keluar->alasan }}</td>
-                            <td>{{ $keluar->is_approved == 1 ? 'Disetujui' : ($keluar->is_approved == 2 ? 'Ditolak' : 'Belum Disetujui') }}
-                            <td>{{ $keluar->approval }}</td>
+                            <td>{{ $ketidakhadiran->nik }}</td>
+                            <td>{{ $ketidakhadiran->tanggal }}</td>
+                            <td>{{ $ketidakhadiran->tanggal_selesai }}</td>
+                            <td>{{ $ketidakhadiran->alasan }}</td>
+                            <td>{{ $ketidakhadiran->potong_cuti }}</td>
+                            <td>{{ $ketidakhadiran->status == 1 ? 'Disetujui' : ($ketidakhadiran->status == 2 ? 'Ditolak' : 'Belum Disetujui') }}
+                            </td>
+                            <td>{{ $ketidakhadiran->approval_name ? $ketidakhadiran->approval_name : '' }}</td>
                             <td>
-                                <button class="btn btn-success btn-setujui" data-id="{{ $keluar->id }}">Setujui</button>
-                                <button class="btn btn-danger btn-tolak" data-id="{{ $keluar->id }}">Tolak</button>
-                                <button class="btn btn-maroon btn-hapus" data-id="{{ $keluar->id }}">Delete</button>
+                                <button class="btn btn-success btn-setujui"
+                                    data-id="{{ $ketidakhadiran->id }}">Setujui</button>
+                                <button class="btn btn-danger btn-tolak" data-id="{{ $ketidakhadiran->id }}">Tolak</button>
+                                <button class="btn btn-maroon btn-hapus" data-id="{{ $ketidakhadiran->id }}">Delete</button>
                             </td>
                         </tr>
                     @endforeach
@@ -54,11 +56,11 @@
 
             var id = $(this).data('id');
             $.ajax({
-                url: '/izinkeluar/' + id,
+                url: '/ketidakhadiran/' + id,
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    is_approved: 'approved'
+                    status: 'approved'
                 },
                 success: function(data) {
                     $('#body').html(data);
@@ -77,11 +79,11 @@
         $('.btn-tolak').on('click ', function() {
             var id = $(this).data('id');
             $.ajax({
-                url: '/izinkeluar/' + id,
+                url: '/ketidakhadiran/' + id,
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    is_approved: 'rejected'
+                    status: 'rejected'
                 },
                 success: function(data) {
                     $('#body').html(data);
@@ -91,9 +93,9 @@
 
         $('.btn-hapus').on('click', function() {
             var id = $(this).data('id');
-            if (confirm("Apakah Anda yakin ingin menghapus izin keluar ini?")) {
+            if (confirm("Apakah Anda yakin ingin menghapus ketidakhadiran ini?")) {
                 $.ajax({
-                    url: '/izinkeluar/' + id,
+                    url: '/ketidakhadiran/' + id,
                     type: 'POST',
                     data: {
                         _method: 'DELETE',
