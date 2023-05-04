@@ -15,8 +15,9 @@
                                 value="{{ $tanggal }}">
                         </div>
                         <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary">Tampilkan</button>
+                            <button type="submit" class="btn btn-primary" id="daily">Tampilkan</button>
                         </div>
+                        <a class="btn btn-success" id="monthly">Tampilkan Per Bulan</a>
                     </div>
 
                 </form>
@@ -45,10 +46,10 @@
                                 <td>
                                     @if ($presensi->jam == '' || !$presensi->jam)
                                     @else
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#imageModal{{ $presensi->nik }}">
-                                        Lihat
-                                    </button>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#imageModal{{ $presensi->nik }}">
+                                            Lihat
+                                        </button>
                                     @endif
                                     <div class="modal fade" id="imageModal{{ $presensi->nik }}" tabindex="-1"
                                         role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
@@ -63,7 +64,7 @@
                                                 </div>
                                                 <div class="modal-body-img">
                                                     <img src="{{ asset('storage') . '/' . $presensi->img_path }}"
-                                                        class="img-fluid" width="400rem" height="400rem" >
+                                                        class="img-fluid" width="400rem" height="400rem">
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary"
@@ -73,6 +74,28 @@
                                         </div>
                                     </div>
                                 </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <table class="table table-bordered" id="monthly-presensi" style="display:none;">
+                    <thead>
+                        <tr>
+                            <th>Nama</th>
+                            <th>NIK</th>
+                            <th>Jumlah Kehadiran</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+
+                                <td>{{ $user->nama }}</td>
+                                <td>{{ $user->nik }}</td>
+                                <td>{{ $user->count }}</td>
+                                <td><button type="button" class="btn btn-primary"> Tampilkan sebagai PDF </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -104,12 +127,41 @@
                 },
                 success: function(data) {
                     $('#body').html(data);
-
+                    $('#monthly-presensi').hide();
+                    $('#table-presensi').show();
                 }
             });
         });
     });
 </script>
+
+{{-- <script>
+    $(document).ready(function() {
+        console.log('executed');
+        $('#monthly-presensi').hide();
+    });
+</script>
+ --}}
+<script>
+    $(document).ready(function() {
+        $('#monthly').on('click', function() {
+            console.log('jalan');
+            $('#table-presensi').hide();
+            $('#monthly-presensi').show();
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#daily').on('click',
+            function() {
+                $('#monthly-presensi').hide();
+                $('#table-presensi').show();
+            })
+    });
+</script>
+
 
 {{-- @yield('title') --}}
 @yield('user-content')
