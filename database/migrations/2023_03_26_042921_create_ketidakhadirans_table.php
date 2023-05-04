@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->date('tanggal_selesai')->nullable();
             $table->string('alasan', 100);
             $table->String('potong_cuti')->default('tidak');
-            $table->string('disetujui', 100);
+            $table->string('status', 100);
             $table->string('approval', 100);
             $table->timestamps();
         });
