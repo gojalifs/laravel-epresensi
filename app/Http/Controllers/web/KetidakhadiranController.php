@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Auth;
 
 class KetidakhadiranController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
