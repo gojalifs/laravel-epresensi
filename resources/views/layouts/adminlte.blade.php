@@ -191,6 +191,13 @@
     </script>
 
     <script>
+        $(document).ajaxError(function(event, xhr, settings, thrownError) {
+            if (xhr.status == 401) {
+                $('#main-content').html('Session Expired!');
+                window.location.href = "/"; // Ganti "/login" dengan URL halaman login Anda
+            }
+        });
+
         $(document).ready(function() {
             $('.nav-link').click(function(event) {
                 event.preventDefault();

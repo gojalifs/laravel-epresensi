@@ -4,7 +4,9 @@ namespace App\Http\Controllers\web;
 use App\Http\Controllers\Controller;
 use App\Models\RevisiAbsen;
 use App\Models\User;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -33,17 +35,33 @@ class PresensiController extends Controller
         $jumlah_hari = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
         $users = User::all();
 
-        $bulanIni = date('m'); // mendapatkan bulan saat ini dalam format 2 digit angka
-        $nik = $request->nik;
+        $nik = Auth::user()->nik;
+        $report = DB::select('CALL sp_laporan_bulanan(?)', [$nik]);
 
-        // foreach ($users as $item) {
-
-        //     // $approval_name = User::where('nik', $nik)->value('nama');
-        //     $count = DB::select("SELECT COUNT(*) as count FROM presensis WHERE month(tanggal) = ? and nik = ?", [$bulanIni, $nik]);
-        //     $item->count = $count[0];
-
-        // }
-        return view('content.presensi', compact('presensis', 'tanggal', 'bulan', 'tahun', 'jumlah_hari'))->with('users', $users);
+        return view('content.presensi', compact('presensis', 'tanggal', 'bulan', 'tahun', 'jumlah_hari'))
+            ->with('users', $users)
+            ->with('report', $report);
     }
 
+    public function laporanPresensi(Request $request)
+    {
+        $users = User::all();
+        $nik = $request->input('nik');
+
+        $report = DB::select('CALL sp_laporan_bulanan(?)', [$nik]);
+
+        $data = [
+            'report' => $report,
+            'users' => $users
+        ];
+
+        $user = User::where('nik', $nik)->first();
+
+        $fileName = 'laporan_presensi' . '_' . $user->nama . '_' . $user->nik . '.pdf';
+
+        $pdf = app(PDF::class)->loadView('pdf.laporan-presensi', $data);
+
+        // Mengubah nama file dan mengatur header untuk langsung men-download file
+        return $pdf->download($fileName, ['Content-Type' => 'application/pdf', 'fileName' => $fileName]);
+    }
 }

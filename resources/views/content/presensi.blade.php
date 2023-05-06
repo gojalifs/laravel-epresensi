@@ -84,7 +84,7 @@
                         <tr>
                             <th>Nama</th>
                             <th>NIK</th>
-                            <th>Jumlah Kehadiran</th>
+                            {{-- <th>Jumlah Kehadiran Bulan Ini</th> --}}
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -94,8 +94,16 @@
 
                                 <td>{{ $user->nama }}</td>
                                 <td>{{ $user->nik }}</td>
-                                <td>{{ $user->count }}</td>
-                                <td><button type="button" class="btn btn-primary"> Tampilkan sebagai PDF </td>
+                                {{-- <td>{{ $user->count }}</td> --}}
+                                <td><button type="button" class="btn btn-primary get_report"
+                                        data-id="{{ $user }}">
+                                        Tampilkan sebagai PDF
+                                    </button>
+
+                                    {{-- <button class="btn btn-success btn-setujui"
+                                        data-id="{{ $revisi->id }}">Setujui</button> --}}
+
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -135,17 +143,11 @@
     });
 </script>
 
-{{-- <script>
-    $(document).ready(function() {
-        console.log('executed');
-        $('#monthly-presensi').hide();
-    });
-</script>
- --}}
 <script>
     $(document).ready(function() {
         $('#monthly').on('click', function() {
             console.log('jalan');
+
             $('#table-presensi').hide();
             $('#monthly-presensi').show();
         });
@@ -161,6 +163,59 @@
             })
     });
 </script>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('.get_report').on('click', function() {
+            // Mendapatkan nilai dari atribut data-id
+            var userData = $(this).data('id');
+
+            // Parsing string JSON menjadi objek JavaScript
+            // console.log(userData);
+            console.log(userData.nik);
+            // var user = JSON.parse(userId);
+            // Mendapatkan nilai nama dan nik dari objek user
+            var nama = userData.nama;
+            var userNik = userData.nik;
+            // var userNik = $(this).data('id');
+            $.ajax({
+                url: '/presensi/report',
+                type: 'GET',
+                data: {
+                    nik: userNik,
+                    _token: '{{ csrf_token() }}',
+                },
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function(response) {
+                    var fileName = 'Laporan Presensi ' + nama + ' ' + userNik + ' .pdf';
+
+                    console.log(fileName);
+
+                    // Membuat blob URL dari response dan membuat link download
+                    var blob = new Blob([response], {
+                        type: 'application/pdf'
+                    });
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    
+                    a.href = url;
+                    a.download = fileName;
+                    a.click();
+                },
+                error: function(response) {
+                    console.log(userNik);
+                    console.log(response.message);
+                }
+            });
+        })
+    })
+</script>
+
+
 
 
 {{-- @yield('title') --}}
