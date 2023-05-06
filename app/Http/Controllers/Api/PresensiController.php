@@ -31,7 +31,8 @@ class PresensiController extends Controller
 
     public function store(PresensiRequest $request)
     {
-        // try {
+
+        date_default_timezone_set('Asia/Jakarta');
 
         $nik = $request->input('nik');
         $tanggal = date("Y-m-d", strtotime("today"));
@@ -55,8 +56,6 @@ class PresensiController extends Controller
         ])->first();
 
         if ($presensi) {
-
-
             $presensi_details = DB::table('presensi_details')
                 ->where([
                     ['id_presensi', '=', $presensi->id_presensi],

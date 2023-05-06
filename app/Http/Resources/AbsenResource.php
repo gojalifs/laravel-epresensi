@@ -18,6 +18,7 @@ class AbsenResource extends JsonResource
             'id' => $this->id,
             'nik' => $this->nik,
             'date' => $this->tanggal,
+            'endDate' => $this->tanggal_selesai,
             'alasan' => $this->alasan,
             'potong_cuti' => $this->potong_cuti
         ];

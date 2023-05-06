@@ -12,7 +12,8 @@ class Ketidakhadiran extends Model
     protected $fillable = [
         'nik',
         'tanggal',
+        'tanggal_selesai',
         'alasan',
-        'is_cuti'
+        'potong_cuti'
     ];
 }

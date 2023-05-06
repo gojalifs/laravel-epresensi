@@ -11,10 +11,11 @@ class IzinKeluar extends Model
 
     protected $fillable = [
         'user_nik',
+        'alasan',
         'tanggal',
         'jam_keluar',
         'jam_kembali',
         'is_approved',
-        'approval_id',
+        'approval',
     ];
 }

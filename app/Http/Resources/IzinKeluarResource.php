@@ -16,6 +16,7 @@ class IzinKeluarResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'alasan' => $this->alasan,
             'userNik' => $this->user_nik,
             'date' => $this->tanggal,
             'jamKeluar' => $this->jam_keluar,
