@@ -93,6 +93,7 @@ class WebUserController extends Controller
         $sqlFind = "SELECT nik FROM users WHERE nik = ?";
         $params = [$nik];
         $findResult = DB::select($sqlFind, $params);
+        $isPasswordChanged = false;
 
         if (count($findResult) === 1) {
 
@@ -108,25 +109,22 @@ class WebUserController extends Controller
 
 
             if (!empty($request->password)) {
-                $sqlp = "UPDATE passwords set pass = ? where nik = ?";
+                $sqlp = "UPDATE passwords set pass = ? where user_nik = ?";
                 $paramsp = [$password, $nik];
                 DB::update($sqlp, $paramsp);
+                $isPasswordChanged = true;
             }
-            // return response()->json([
-            //     'success' => false,
-            //     'message' => 'No data updated'
-            // ]);
 
-            if ($affectedRows == 0) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'No data updated'
-                ]);
-
-            } else {
+            if ($affectedRows != 0 || $isPasswordChanged == true) {
                 return response()->json([
                     'success' => true,
                     'message' => 'User updated successfully',
+                ]);
+            } else {
+                return response()->json([
+                    'password' => $request->password,
+                    'success' => false,
+                    'message' => 'No data updated'
                 ]);
             }
 
