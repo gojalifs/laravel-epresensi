@@ -6,7 +6,7 @@
     <div class="container" id="body">
         <div class="row">
             <div class="col-md-12">
-                <h3>Data Presensi</h3>
+                <h3 id="month_name">Data Presensi</h3>
                 <form action="" method="GET" id="form-presensi">
                     <div class="form-group row">
                         <label for="tanggal" class="col-md-2 col-form-label text-md-right">Tanggal</label>
@@ -17,7 +17,6 @@
                         <div class="col-md-2">
                             <button type="submit" class="btn btn-primary" id="daily">Tampilkan</button>
                         </div>
-                        <a class="btn btn-success" id="monthly">Tampilkan Per Bulan</a>
                     </div>
 
                 </form>
@@ -78,36 +77,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
-                <table class="table table-bordered" id="monthly-presensi" style="display:none;">
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>NIK</th>
-                            {{-- <th>Jumlah Kehadiran Bulan Ini</th> --}}
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($users as $user)
-                            <tr>
-
-                                <td>{{ $user->nama }}</td>
-                                <td>{{ $user->nik }}</td>
-                                {{-- <td>{{ $user->count }}</td> --}}
-                                <td><button type="button" class="btn btn-primary get_report"
-                                        data-id="{{ $user }}">
-                                        Tampilkan sebagai PDF
-                                    </button>
-
-                                    {{-- <button class="btn btn-success btn-setujui"
-                                        data-id="{{ $revisi->id }}">Setujui</button> --}}
-
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>
@@ -118,15 +87,42 @@
             // set tanggal awal saat pertama kali load halaman
             let today = new Date().toISOString().substr(0, 10);
             $('#tanggal').val(today);
+
         });
     </script>
 @stop
 
 <script>
     $(document).ready(function() {
+        var tanggal = $('#tanggal').val();
+        console.log(tanggal);
+        var options = {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            timeZone: 'Asia/Jakarta'
+        };
+        var date = new Date(tanggal + 'T00:00:00+07:00'); // timezone offset untuk WIB adalah +07:00
+        var tanggalIndonesia = date.toLocaleDateString('id-ID', options);
+        console.log(tanggalIndonesia); // Senin, 8 Mei 2023
+        document.getElementById('month_name').innerHTML = 'Data Presensi ' + tanggalIndonesia;
+
         $('#form-presensi').on('submit', function(e) {
             e.preventDefault();
             var tanggal = $('#tanggal').val();
+            console.log(tanggal);
+            var options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'Asia/Jakarta'
+            };
+            var date = new Date(tanggal + 'T00:00:00+07:00'); // timezone offset untuk WIB adalah +07:00
+            var tanggalIndonesia = date.toLocaleDateString('id-ID', options);
+            console.log(tanggalIndonesia); // Senin, 8 Mei 2023
+            document.getElementById('month_name').innerHTML = 'Data Presensi ' + tanggalIndonesia;
             $.ajax({
                 url: "/presensi",
                 type: 'GET',
@@ -201,7 +197,7 @@
                     });
                     var url = URL.createObjectURL(blob);
                     var a = document.createElement('a');
-                    
+
                     a.href = url;
                     a.download = fileName;
                     a.click();

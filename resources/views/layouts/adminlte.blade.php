@@ -10,6 +10,7 @@
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3.2.0/dist/js/adminlte.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -96,15 +97,15 @@
                             <a href="presensi" class="nav-link">
                                 <i class="nav-icon fas fa-clock"></i>
                                 <p>
-                                    Data Kehadiran
+                                    Data Presensi Harian
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="presensi" class="nav-link">
+                            <a href="laporan?isGetReport=true" class="nav-link">
                                 <i class="nav-icon fas fa-clipboard-check"></i>
                                 <p>
-                                    Data Presensi
+                                    Laporan Presensi Bulanan
                                 </p>
                             </a>
                         </li>
