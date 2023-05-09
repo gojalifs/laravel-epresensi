@@ -81,14 +81,6 @@
                             <a href="users-list" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Users
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="users-list" class="nav-link">
-                                <i class="nav-icon fas fa-users"></i>
-                                <p>
                                     Data Guru & Karyawan
                                 </p>
                             </a>

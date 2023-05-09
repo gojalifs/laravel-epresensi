@@ -39,26 +39,8 @@
                 });
             }
         });
-
-        // $('#search').on('keyup', function() {
-        //     $value = $(this).val().toLowerCase();
-        //     $('#user-table tr').filter(function() {
-        //         $(this).toggle($(this).text().toLowerCase().indexOf($value) > -1)
-        //     });
-        // });
     });
 </script>
-
-{{-- <script>
-    $(document).ready(function() {
-        $('#search').on('keyup', function() {
-            $value = $(this).val().toLowerCase();
-            $('#user-table tr').filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf($value) > -1)
-            });
-        });
-    });
-</script> --}}
 
 <script>
     $(document).ready(function() {
@@ -118,7 +100,7 @@
                             $('body').removeClass('modal-open');
 
                         } else {
-                            alert("Submit error");
+                            alert(response.message);
                             // Jika terdapat error, tampilkan pesan error
                             $('#addUserModal').modal('hide');
                             $('.modal-backdrop').remove();
@@ -181,10 +163,10 @@
                             $('.modal-backdrop').remove();
                             $('body').removeClass('modal-open');
                         } else {
-                            alert("Submit error");
-                            // Jika terdapat error, tampilkan pesan error
-                            $('#form-add-user .error-message').text(response.message)
-                                .show();
+                            alert(response.message);
+                            $('#addUserModal').modal('hide');
+                            $('.modal-backdrop').remove();
+                            $('body').removeClass('modal-open');
                         }
                         var urllist = 'users-list';
                         $('#body').load(urllist);

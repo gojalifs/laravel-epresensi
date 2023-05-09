@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use App\Models\Password;
 use App\Models\User;
 use Carbon\Carbon;
@@ -54,7 +55,9 @@ class WebUserController extends Controller
         $user->email = $request->email;
         $user->gender = $request->gender;
         $user->telp = $request->telp;
+        $user->is_admin = 0;
         $user->password = Hash::make($request->password);
+
         if ($request->is_admin == 'on') {
             $user->is_admin = 1;
         } else {
@@ -93,13 +96,16 @@ class WebUserController extends Controller
         $sqlFind = "SELECT nik FROM users WHERE nik = ?";
         $params = [$nik];
         $findResult = DB::select($sqlFind, $params);
-        $isPasswordChanged = false;
 
         if (count($findResult) === 1) {
 
 
-            $sql = "UPDATE users SET nama = ?, nipns = ?, email = ?, gender = ?, telp = ?, is_admin = ? WHERE nik = ?";
-            $params = [$nama, $nipns, $email, $gender, $telp, (int) $is_admin, $nik];
+            $sql = "UPDATE users SET nama = ?, nipns = ?, email = ?, gender = ?, telp = ?, password = ?, is_admin = ? WHERE nik = ?";
+            $params = [$nama, $nipns, $email, $gender, $telp, $password, (int) $is_admin, $nik];
+            if ($is_admin == 0) {
+                $sql = "UPDATE users SET nama = ?, nipns = ?, email = ?, gender = ?, telp = ?, password = ?, is_admin = ? WHERE nik = ?";
+                $params = [$nama, $nipns, $email, $gender, $telp, null, (int) $is_admin, $nik];
+            }
             try {
                 $affectedRows = DB::update($sql, $params);
             } catch (\Exception $e) {
@@ -108,23 +114,26 @@ class WebUserController extends Controller
             }
 
 
-            if (!empty($request->password)) {
-                $sqlp = "UPDATE passwords set pass = ? where user_nik = ?";
-                $paramsp = [$password, $nik];
-                DB::update($sqlp, $paramsp);
-                $isPasswordChanged = true;
-            }
+            // if (!empty($request->password)) {
+            //     $sqlp = "UPDATE passwords set pass = ? where nik = ?";
+            //     $paramsp = [$password, $nik];
+            //     DB::update($sqlp, $paramsp);
+            // }
+            // return response()->json([
+            //     'success' => false,
+            //     'message' => 'No data updated'
+            // ]);
 
-            if ($affectedRows != 0 || $isPasswordChanged == true) {
+            if ($affectedRows == 0) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No data updated'
+                ]);
+
+            } else {
                 return response()->json([
                     'success' => true,
                     'message' => 'User updated successfully',
-                ]);
-            } else {
-                return response()->json([
-                    'password' => $request->password,
-                    'success' => false,
-                    'message' => 'No data updated'
                 ]);
             }
 
@@ -140,7 +149,6 @@ class WebUserController extends Controller
     {
         $nik = $request->input('nik');
         $user = User::where('nik', $nik)->first();
-        echo 'User has been deleted.';
 
         if ($user) {
             $user->delete();
@@ -156,4 +164,9 @@ class WebUserController extends Controller
         }
     }
 
+    public function admins(Request $request)
+    {
+        $admins = Admin::all();
+        return view('content.admin')->with('admins', $admins);
+    }
 }

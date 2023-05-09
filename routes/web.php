@@ -28,11 +28,13 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\web\DashboardController::class, 'index']);
+
 Route::get('/users-list', [App\Http\Controllers\web\WebUserController::class, 'index'])->name('users-list');
 Route::post('/users/search', [App\Http\Controllers\web\WebUserController::class, 'search'])->name('users.search');
 Route::post('/users/add', [App\Http\Controllers\Api\UserController::class, 'store'])->name('users.add');
 Route::post('/users/update', [App\Http\Controllers\web\WebUserController::class, 'updateUser'])->name('users.update');
 Route::delete('/users/delete', [App\Http\Controllers\web\WebUserController::class, 'delete'])->name('users.delete');
+
 Route::get('/cuti', [App\Http\Controllers\web\CutiController::class, 'index']);
 Route::get('/presensi', [App\Http\Controllers\web\PresensiController::class, 'index']);
 Route::get('/presensi-act', [App\Http\Controllers\web\PresensiController::class, 'action']);
