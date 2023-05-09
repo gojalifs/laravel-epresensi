@@ -25,22 +25,40 @@ class PresensiController extends Controller
     public function index(Request $request)
     {
         // get the selected month and year from request
-        $bulan = $request->input('bulan', date('m'));
-        $tahun = $request->input('tahun', date('Y'));
+        // $bulan = $request->input('bulan', date('m'));
+        // $tahun = $request->input('tahun', date('Y'));
         $tanggal = $request->input('tanggal') ?? date('Y-m-d');
+        $isReport = $request->isGetReport ?? false;
         // call the stored procedure to get the presensi data
         $presensis = DB::select('CALL get_presensi(?)', [$tanggal]);
 
         // calculate the number of days in the selected month and year
-        $jumlah_hari = cal_days_in_month(CAL_GREGORIAN, $bulan, $tahun);
         $users = User::all();
+        // $tanggal = $request->input('tanggal'); // asumsi request menggunakan metode POST
+        $tanggal_array = explode('-', $tanggal);
+        $bulans = (int) $tanggal_array[1];
+        $tahuns = (int) $tanggal_array[0];
+        // $jumlah_hari = cal_days_in_month(CAL_GREGORIAN, $bulans, $tahuns);
 
         $nik = Auth::user()->nik;
-        $report = DB::select('CALL sp_laporan_bulanan(?)', [$nik]);
+        $report = DB::select('CALL sp_laporan_bulanan(?, ?, ?)', [$nik, $bulans, $tahuns]);
 
-        return view('content.presensi', compact('presensis', 'tanggal', 'bulan', 'tahun', 'jumlah_hari'))
-            ->with('users', $users)
-            ->with('report', $report);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => $tanggal_array,
+        // ]);
+        if ($isReport) {
+            return view('content.laporan_presensi', compact('presensis', 'tanggal', 'bulans', 'tahuns'))
+                ->with('users', $users)
+                ->with('report', $report)
+                ->with('bulans', $bulans);
+        } else {
+            return view('content.presensi', compact('presensis', 'tanggal', 'bulans', 'tahuns'))
+                ->with('users', $users)
+                ->with('report', $report);
+
+        }
+
     }
 
     public function laporanPresensi(Request $request)
@@ -48,7 +66,20 @@ class PresensiController extends Controller
         $users = User::all();
         $nik = $request->input('nik');
 
-        $report = DB::select('CALL sp_laporan_bulanan(?)', [$nik]);
+        $tanggal = $request->input('tanggal'); // asumsi request menggunakan metode POST
+        $tanggal_array = explode('-', $tanggal);
+        // return response()->json([
+        //     'success' => true,
+        //     'message' => $tanggal_array,
+        // ]);
+        $bulan = $tanggal_array[1];
+        $tahun = $tanggal_array[0];
+        // $tanggal_array[0] -> tahun
+        // $tanggal_array[1] -> bulan
+        // $tanggal_array[2] -> hari
+
+
+        $report = DB::select('CALL sp_laporan_bulanan(?, ?, ?)', [$nik, $bulan, $tahun]);
 
         $data = [
             'report' => $report,

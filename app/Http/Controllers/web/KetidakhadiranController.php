@@ -58,6 +58,12 @@ class KetidakhadiranController extends Controller
             $ketidakhadiran->save();
 
             $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
+            foreach ($ketidakhadiran as $item) {
+                if (!empty($item->approval_id)) {
+                    $approval_name = User::where('nik', $nik)->value('nama');
+                    $item->approval_name = $approval_name;
+                }
+            }
             // return success message
             return view('content.ketidakhadiran', ['ketidakhadiran' => $ketidakhadiran, 'approval_name' => $approval_name]);
 
@@ -69,10 +75,18 @@ class KetidakhadiranController extends Controller
     public function destroy($id)
     {
         try {
+            $nik = Auth::user()->nik;
+
             $ketidakhadiran = Ketidakhadiran::findOrFail($id);
             $ketidakhadiran->delete();
 
             $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
+            foreach ($ketidakhadiran as $item) {
+                if (!empty($item->approval_id)) {
+                    $approval_name = User::where('nik', $nik)->value('nama');
+                    $item->approval_name = $approval_name;
+                }
+            }
             // return success message
             return view('content.ketidakhadiran')->with('ketidakhadiran', $ketidakhadiran);
         } catch (\Exception $e) {
