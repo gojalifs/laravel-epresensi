@@ -75,7 +75,6 @@
 
 <script>
     $(document).ready(function() {
-
         $('.btn-tolak').on('click ', function() {
             var id = $(this).data('id');
             $.ajax({

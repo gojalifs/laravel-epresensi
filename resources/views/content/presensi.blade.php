@@ -26,6 +26,8 @@
                             <th>Nama</th>
                             <th>NIK</th>
                             <th>Jenis</th>
+                            <th>NIPNS</th>
+                            <th>Status</th>
                             <th>Jam</th>
                             <th>Longitude</th>
                             <th>Latitude</th>
@@ -39,6 +41,13 @@
                                 <td>{{ $presensi->nama }}</td>
                                 <td>{{ $presensi->nik }}</td>
                                 <td>{{ $presensi->jenis }}</td>
+                                <td>{{ $presensi->nipns }}</td>
+                                @if ($presensi->nipns == '' || !$presensi->nipns)
+                                    <td>Honorer</td>
+                                @else
+                                    <td>PNS</td>
+                                    </button>
+                                @endif
                                 <td>{{ $presensi->jam }}</td>
                                 <td>{{ $presensi->longitude }}</td>
                                 <td>{{ $presensi->latitude }}</td>
