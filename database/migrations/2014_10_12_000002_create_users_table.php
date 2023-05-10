@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telp', 18)->unique();
             $table->tinyInteger('is_admin')->default(0);
             $table->string('ava_path', 50)->default('-');
+            $table->string('password', 255)->nullable();
             $table->string('token', 128)->nullable();
             $table->dateTime('token_expiry')->nullable();
             $table->rememberToken();
