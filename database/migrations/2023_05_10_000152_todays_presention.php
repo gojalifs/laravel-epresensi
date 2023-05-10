@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up()
     {
         DB::unprepared('
-        CREATE DEFINER=`fajar`@`localhost` PROCEDURE `todays_presention`(IN nik_param varchar(30), IN date_param date)
+        CREATE DEFINER=`rudi`@`localhost` PROCEDURE `todays_presention`(IN nik_param varchar(30), IN date_param date)
         BEGIN
         
             DECLARE date_p date;

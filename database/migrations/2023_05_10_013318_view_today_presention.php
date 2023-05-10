@@ -12,7 +12,7 @@ return new class extends Migration {
     {
         DB::statement("
             CREATE ALGORITHM = UNDEFINED 
-            DEFINER = `fajar`@`localhost` 
+            DEFINER = `rudi`@`localhost` 
             SQL SECURITY DEFINER
             VIEW `todays_presention_view` AS
                 SELECT 

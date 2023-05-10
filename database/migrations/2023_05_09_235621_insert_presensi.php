@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up()
     {
         DB::unprepared("
-        CREATE DEFINER=`fajar`@`localhost` PROCEDURE `insert_presensi`(
+        CREATE DEFINER=`rudi`@`localhost` PROCEDURE `insert_presensi`(
             IN p_nik BIGINT(20),
             
             IN p_jenis ENUM('masuk', 'keluar'),

@@ -13,7 +13,7 @@ return new class extends Migration {
     public function up()
     {
         DB::unprepared('
-            CREATE DEFINER=`fajar`@`localhost` PROCEDURE `get_presensi`(IN tanggal DATE)
+            CREATE DEFINER=`rudi`@`localhost` PROCEDURE `get_presensi`(IN tanggal DATE)
             BEGIN
                 SELECT u.nama, u.nik, u.nipns, p.id_presensi, p.tanggal, pd.jenis, pd.jam, pd.longitude, pd.latitude, pd.img_path
                 FROM users u

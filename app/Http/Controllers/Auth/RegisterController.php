@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Password;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -98,16 +99,23 @@ class RegisterController extends Controller
         // generate new nik
         $nik = now()->format('ym') . str_pad($lastNikNumber, 4, '0', STR_PAD_LEFT);
         $pass = Hash::make($data['password']);
-
-        return User::create([
-            'nik' => $nik,
-            'nama' => $data['name'],
-            'nipns' => $data['nipns'],
-            'email' => $data['email'],
-            'gender' => $data['gender'],
-            'telp' => $data['telp'],
-            'password' => $pass,
-            'is_admin' => 1
+        
+        $returnUser = User::create([
+                'nik' => $nik,
+                'nama' => $data['name'],
+                'nipns' => $data['nipns'],
+                'email' => $data['email'],
+                'gender' => $data['gender'],
+                'telp' => $data['telp'],
+                'password' => $pass,
+                'is_admin' => 1
+            ]);
+    
+        Password::create([
+            'user_nik' => $nik,
+            'pass' => $pass
         ]);
+
+        return $returnUser;
     }
 }

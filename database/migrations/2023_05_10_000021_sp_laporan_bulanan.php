@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up()
     {
         DB::unprepared('
-            CREATE DEFINER=`fajar`@`localhost` PROCEDURE `sp_laporan_bulanan`(IN p_nik VARCHAR(255), IN p_bulan INT, IN p_tahun INT)
+            CREATE DEFINER=`rudi`@`localhost` PROCEDURE `sp_laporan_bulanan`(IN p_nik VARCHAR(255), IN p_bulan INT, IN p_tahun INT)
             BEGIN
                 SELECT p.id_presensi, u.nik, u.nama, p.tanggal, pd.jenis, pd.jam, pd.longitude, pd.latitude
                 FROM presensis p
