@@ -107,7 +107,7 @@ class RegisterController extends Controller
             'gender' => $data['gender'],
             'telp' => $data['telp'],
             'password' => $pass,
-            'is_admin' => 0
+            'is_admin' => 1
         ]);
     }
 }
