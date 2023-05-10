@@ -18,7 +18,7 @@ return new class extends Migration {
                 ->cascadeOnDelete();
             $table->date('tanggal');
             $table->time('jam');
-            $table->string('direvisi', 20);
+            $table->string('yang_direvisi', 20);
             $table->string('alasan', 100);
             $table->tinyInteger('is_approved')->default(0);
             $table->timestamps();

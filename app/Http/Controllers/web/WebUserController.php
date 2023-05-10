@@ -99,6 +99,10 @@ class WebUserController extends Controller
 
         if (count($findResult) === 1) {
 
+            $oldPassword = DB::select("SELECT pass FROM passwords WHERE user_nik = ? AND pass = ?", [$nik, $password]);
+            if (count($oldPassword) != 1) {
+                DB::update("UPDATE passwords SET pass = ? WHERE user_nik = ?", [$password, $nik]);
+            }
 
             $sql = "UPDATE users SET nama = ?, nipns = ?, email = ?, gender = ?, telp = ?, password = ?, is_admin = ? WHERE nik = ?";
             $params = [$nama, $nipns, $email, $gender, $telp, $password, (int) $is_admin, $nik];
@@ -112,17 +116,6 @@ class WebUserController extends Controller
                 echo "Error: " . $e->getMessage();
                 exit;
             }
-
-
-            // if (!empty($request->password)) {
-            //     $sqlp = "UPDATE passwords set pass = ? where nik = ?";
-            //     $paramsp = [$password, $nik];
-            //     DB::update($sqlp, $paramsp);
-            // }
-            // return response()->json([
-            //     'success' => false,
-            //     'message' => 'No data updated'
-            // ]);
 
             if ($affectedRows == 0) {
                 return response()->json([

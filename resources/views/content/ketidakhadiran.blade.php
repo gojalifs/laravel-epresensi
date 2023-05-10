@@ -17,7 +17,7 @@
                         <th>Tanggal Selesai</th>
                         <th>Alasan</th>
                         <th>Potong Cuti?</th>
-                        <th>Disetujui?</th>
+                        <th>Status</th>
                         <th>Approval</th>
                         <th>Action</th>
                     </tr>
