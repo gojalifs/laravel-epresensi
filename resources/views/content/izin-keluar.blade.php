@@ -17,7 +17,7 @@
                         <th>Jam Keluar</th>
                         <th>Jam Kembali</th>
                         <th>Alasan</th>
-                        <th>Disetujui?</th>
+                        <th>Status Pengajuan</th>
                         <th>Approval</th>
                         <th>Action</th>
                     </tr>
@@ -31,7 +31,7 @@
                             <td>{{ $keluar->jam_kembali }}</td>
                             <td>{{ $keluar->alasan }}</td>
                             <td>{{ $keluar->is_approved == 1 ? 'Disetujui' : ($keluar->is_approved == 2 ? 'Ditolak' : 'Belum Disetujui') }}
-                            <td>{{ $keluar->approval }}</td>
+                            <td>{{ $keluar->approval_name }}</td>
                             <td>
                                 <button class="btn btn-success btn-setujui" data-id="{{ $keluar->id }}">Setujui</button>
                                 <button class="btn btn-danger btn-tolak" data-id="{{ $keluar->id }}">Tolak</button>

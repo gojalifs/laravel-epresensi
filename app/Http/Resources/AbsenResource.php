@@ -20,7 +20,8 @@ class AbsenResource extends JsonResource
             'date' => $this->tanggal,
             'endDate' => $this->tanggal_selesai,
             'alasan' => $this->alasan,
-            'potong_cuti' => $this->potong_cuti
+            'potongCuti' => $this->potong_cuti,
+            'status' => $this->status,
         ];
     }
 }

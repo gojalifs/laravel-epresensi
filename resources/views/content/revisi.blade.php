@@ -27,7 +27,7 @@
                             <td>{{ $revisi->user_nik }}</td>
                             <td>{{ $revisi->tanggal }}</td>
                             <td>{{ $revisi->jam }}</td>
-                            <td>{{ $revisi->direvisi }}</td>
+                            <td>{{ $revisi->yang_direvisi }}</td>
                             <td>{{ $revisi->alasan }}</td>
                             <td>{{ $revisi->is_approved == 1 ? 'Disetujui' : ($revisi->is_approved == 2 ? 'Ditolak' : 'Belum Disetujui') }}
                             </td>

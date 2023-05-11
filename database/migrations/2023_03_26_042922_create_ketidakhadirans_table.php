@@ -20,7 +20,7 @@ return new class extends Migration {
             $table->string('alasan', 100);
             $table->String('potong_cuti')->default('tidak');
             $table->tinyInteger('status')->default(0);
-            $table->string('approval_id', 100);
+            $table->string('approval_id', 100)->nullable();
             $table->timestamps();
         });
     }

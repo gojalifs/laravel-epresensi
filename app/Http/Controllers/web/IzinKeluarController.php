@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\IzinKeluar;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +21,14 @@ class IzinKeluarController extends Controller
     }
     public function index()
     {
-        $izin_keluars = IzinKeluar::all();
+        $izin_keluars = IzinKeluar::all()->sortDesc();
+        
+        foreach ($izin_keluars as $item) {
+            if (!empty($item->approval)) {
+                $approval_name = User::where('nik', $item->approval)->value('nama');
+                $item->approval_name = $approval_name;
+            }
+        }
         return view('content.izin-keluar')->with('izin_keluars', $izin_keluars);
     }
 
@@ -48,6 +56,13 @@ class IzinKeluarController extends Controller
 
             $izin_keluars = IzinKeluar::all();
             // return success message
+            foreach ($izin_keluars as $item) {
+                if (!empty($item->approval)) {
+                    $approval_name = User::where('nik', $item->approval)->value('nama');
+                    $item->approval_name = $approval_name;
+                }
+            }
+            
             return view('content.izin-keluar')->with('izin_keluars', $izin_keluars);
 
         } catch (\Exception $e) {

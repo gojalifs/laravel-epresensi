@@ -19,6 +19,7 @@ class IzinKeluarResource extends JsonResource
             'alasan' => $this->alasan,
             'userNik' => $this->user_nik,
             'date' => $this->tanggal,
+            'status' => $this->is_approved,
             'jamKeluar' => $this->jam_keluar,
             'jamKembali' => $this->jam_kembali
         ];

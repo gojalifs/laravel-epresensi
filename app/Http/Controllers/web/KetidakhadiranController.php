@@ -26,12 +26,12 @@ class KetidakhadiranController extends Controller
 
         foreach ($ketidakhadiran as $item) {
             if (!empty($item->approval_id)) {
-                $approval_name = User::where('nik', $nik)->value('nama');
+                $approval_name = User::where('nik', $item->approval_id)->value('nama');
                 $item->approval_name = $approval_name;
             }
         }
 
-        return view('content.ketidakhadiran', ['ketidakhadiran' => $ketidakhadiran, 'approval_name' => $approval_name]);
+        return view('content.ketidakhadiran', ['ketidakhadiran' => $ketidakhadiran]);
     }
 
 
@@ -60,7 +60,7 @@ class KetidakhadiranController extends Controller
             $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
             foreach ($ketidakhadiran as $item) {
                 if (!empty($item->approval_id)) {
-                    $approval_name = User::where('nik', $nik)->value('nama');
+                    $approval_name = User::where('nik', $item->approval_id)->value('nama');
                     $item->approval_name = $approval_name;
                 }
             }

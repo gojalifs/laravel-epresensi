@@ -25,7 +25,7 @@ class RevisiRequest extends FormRequest
             'user_nik' => 'required',
             'tanggal' => 'required',
             'jam' => 'required',
-            'direvisi' => 'required',
+            'yang_direvisi' => 'required',
             'alasan' => 'required'
         ];
     }

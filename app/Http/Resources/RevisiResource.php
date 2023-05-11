@@ -19,7 +19,9 @@ class RevisiResource extends JsonResource
             'user_nik' => $this->user_nik,
             'date' => $this->tanggal,
             'time' => $this->jam,
-            'reason' => $this->alasan
+            'reason' => $this->alasan,
+            'revised' => $this->yang_direvisi,
+            'isApproved' => $this->is_approved,
         ];
     }
 }
