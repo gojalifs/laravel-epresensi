@@ -1,0 +1,9 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/username/public_html
+    - /bin/git clone https://github.com/username/repo.git $DEPLOYPATH
+    - /bin/chown -R username:username $DEPLOYPATH
+    - /bin/chmod -R 755 $DEPLOYPATH/storage
+    - cd $DEPLOYPATH
+    - /usr/local/bin/composer install --no-dev
