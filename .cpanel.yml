@@ -1,9 +1,9 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/username/public_html
-    - /bin/git clone https://github.com/username/repo.git $DEPLOYPATH
-    - /bin/chown -R username:username $DEPLOYPATH
+    - export DEPLOYPATH=/home/u3nko3g4/public_html
+    - /bin/git clone https://github.com/u3nko3g4/https://github.com/gojalifs/laravel-epresensi.git $DEPLOYPATH
+    - /bin/chown -R u3nko3g4:u3nko3g4 $DEPLOYPATH
     - /bin/chmod -R 755 $DEPLOYPATH/storage
     - cd $DEPLOYPATH
     - /usr/local/bin/composer install --no-dev
