@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th>NIK</th>
+                        <th>Nama</th>
                         <th>Tanggal</th>
                         <th>Jam Keluar</th>
                         <th>Jam Kembali</th>
@@ -26,6 +27,7 @@
                     @foreach ($izin_keluars as $keluar)
                         <tr>
                             <td>{{ $keluar->user_nik }}</td>
+                            <td>{{ $keluar->name }}</td>
                             <td>{{ $keluar->tanggal }}</td>
                             <td>{{ $keluar->jam_keluar }}</td>
                             <td>{{ $keluar->jam_kembali }}</td>

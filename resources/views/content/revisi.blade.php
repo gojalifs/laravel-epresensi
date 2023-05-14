@@ -12,23 +12,27 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th>Nama</th>
                         <th>NIK</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
                         <th>Yang Direvisi</th>
                         <th>Alasan</th>
-                        <th>Disetujui?</th>
+                        <th>Bukti</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($revisian as $revisi)
                         <tr>
+                            <td>{{ $revisi->name }}</td>
                             <td>{{ $revisi->user_nik }}</td>
                             <td>{{ $revisi->tanggal }}</td>
                             <td>{{ $revisi->jam }}</td>
                             <td>{{ $revisi->yang_direvisi }}</td>
                             <td>{{ $revisi->alasan }}</td>
+                            <td>{{ $revisi->bukti }}</td>
                             <td>{{ $revisi->is_approved == 1 ? 'Disetujui' : ($revisi->is_approved == 2 ? 'Ditolak' : 'Belum Disetujui') }}
                             </td>
                             <td>

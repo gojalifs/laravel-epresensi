@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th>NIK</th>
+                        <th>Nama</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
                         <th>Alasan</th>
@@ -26,6 +27,7 @@
                     @foreach ($ketidakhadiran as $ketidakhadiran)
                         <tr>
                             <td>{{ $ketidakhadiran->nik }}</td>
+                            <td>{{ $ketidakhadiran->name }}</td>
                             <td>{{ $ketidakhadiran->tanggal }}</td>
                             <td>{{ $ketidakhadiran->tanggal_selesai }}</td>
                             <td>{{ $ketidakhadiran->alasan }}</td>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
 use App\Models\RevisiAbsen;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class RevisiController extends Controller
@@ -19,9 +20,15 @@ class RevisiController extends Controller
     }
     public function index()
     {
-        $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
+        $revisian = RevisiAbsen::all()->sortDesc();
+
+        foreach ($revisian as $revisi) {
+            $name = User::where('nik', $revisi->user_nik)->value('nama');
+            $revisi->name = $name;
+        }
         return view('content.revisi')->with('revisian', $revisian);
     }
+
 
     public function update(Request $request, $id)
     {

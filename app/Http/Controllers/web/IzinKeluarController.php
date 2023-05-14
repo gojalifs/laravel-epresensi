@@ -24,6 +24,10 @@ class IzinKeluarController extends Controller
         $izin_keluars = IzinKeluar::all()->sortDesc();
         
         foreach ($izin_keluars as $item) {
+            if (!empty($item->user_nik)) {
+                $name = User::where('nik', $item->user_nik)->value('nama');
+                $item->name = $name;
+            }
             if (!empty($item->approval)) {
                 $approval_name = User::where('nik', $item->approval)->value('nama');
                 $item->approval_name = $approval_name;
