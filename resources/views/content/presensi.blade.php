@@ -4,6 +4,25 @@
 
 @section('user-content')
     <div class="container" id="body">
+        <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="mapModalLabel">Map</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="mapContainer" style="height: 500px;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
         <div class="row">
             <div class="col-md-12">
                 <h3 id="month_name">Data Presensi</h3>
@@ -31,6 +50,7 @@
                             <th>Jam</th>
                             <th>Longitude</th>
                             <th>Latitude</th>
+                            <th>Maps</th>
                             <th>Image</th>
                         </tr>
                     </thead>
@@ -52,37 +72,43 @@
                                 <td>{{ $presensi->longitude }}</td>
                                 <td>{{ $presensi->latitude }}</td>
                                 <td>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#mapModal" data-id="{{ $presensi->id }}">Lihat Map</button>
+                                </td>
+
+                                <td>
                                     @if ($presensi->jam == '' || !$presensi->jam)
                                     @else
-                                        <button type="button" class="btn btn-primary" data-toggle="modal"
-                                            data-target="#imageModal{{ $presensi->nik }}">
+                                        <button type="button" class="btn btn-primary lihat-btn"
+                                            data-img="{{ asset('storage') . '/' . $presensi->img_path }}"
+                                            data-target="#imageModal{{ $presensi->id }}">
                                             Lihat
                                         </button>
                                     @endif
-                                    <div class="modal fade" id="imageModal{{ $presensi->nik }}" tabindex="-1"
-                                        role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="imageModalLabel">Gambar Presensi</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body-img">
-                                                    <img src="{{ asset('storage') . '/' . $presensi->img_path }}"
-                                                        class="img-fluid" width="400rem" height="400rem">
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-dismiss="modal">Close</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </td>
                             </tr>
+                            <!-- Modal -->
+                            <div class="modal fade" id="imageModal{{ $presensi->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="imageModalLabel{{ $presensi->id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="imageModalLabel{{ $presensi->id }}">Gambar Presensi
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body-img">
+                                            <img src="" class="img-fluid" width="400rem" height="400rem">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </tbody>
                 </table>
@@ -90,6 +116,47 @@
         </div>
     </div>
 @stop
+
+@section('scripts')
+    <script>
+        $('.btn-sm').on('show.bs.modal', function(event) {
+            var latitude = data.latitude;
+            var longitude = data.longitude;
+            console.log(latitude);
+            var button = $(event.relatedTarget);
+            var id = button.data('id');
+
+            var map = L.map('mapContainer').setView([0, 0], 1);
+
+            var url = "{{ url('/maps') }}/" + id;
+            $.get(url, function(data) {
+                var latitude = data.latitude;
+                var longitude = data.longitude;
+                console.log(latitude);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap contributors'
+                }).addTo(map);
+
+                L.marker([latitude, longitude]).addTo(map);
+                map.setView([latitude, longitude], 16);
+            });
+        });
+    </script>
+@stop
+
+{{-- Modal Untuk selfie Presensi --}}
+<script>
+    $(document).ready(function() {
+        $('.lihat-btn').click(function() {
+            var imgSrc = $(this).data('img');
+            var targetModal = $(this).data('target');
+            $(targetModal + ' .modal-body-img img').attr('src', imgSrc);
+            $(targetModal).modal('show');
+        });
+    });
+</script>
+
 @section('scripts')
     <script>
         $(document).ready(function() {
@@ -221,7 +288,46 @@
 </script>
 
 
+{{-- 
+@section('user-content')
+    <!DOCTYPE html>
+    <html lang="en">
 
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- Leaflet CSS -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.css"
+            integrity="sha384-JYwKdGdCZOvmPcN2gY7i/njZtTJmHkAdx1aJRmaGFWO0VTd9XttcI+K/fQWNW0Yx" crossorigin="anonymous">
+        <!-- Leaflet JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha384-KI/zl9yfMdE8eW/uP4ynvF3dndqAxyRJJUA2rVnfyk0Nl3BZWtJWn/HU6v/Dus4l" crossorigin="anonymous">
+        </script>
+        <title>Map</title>
+    </head>
 
+    <body>
+        <div id="mapid"></div>
+
+    </body>
+
+    </html>
+
+    <script>
+        // Initialize the map
+        var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+
+        // Add a tile layer to the map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+            maxZoom: 18,
+        }).addTo(mymap);
+
+        // Add a marker to the map
+        var marker = L.marker([51.5, -0.09]).addTo(mymap);
+    </script>
+@endsection
+ --}}
 {{-- @yield('title') --}}
 @yield('user-content')
