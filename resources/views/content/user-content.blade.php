@@ -208,7 +208,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <button type="button" id="add-user" class="btn btn-primary " data-toggle="modal"
-                            data-target="#addUserModal">Tambah Guru/Karyawan</button>
+                            data-target="#addUserModal">Tambah Guru PNS/Honorer</button>
                     </div>
                 </div>
             </div>

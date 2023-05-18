@@ -11,6 +11,11 @@
     <script src="{{ asset('AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3.2.0/dist/js/adminlte.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    {{-- Leaflet Dependency --}}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
@@ -69,19 +74,19 @@
                         data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                              with font-awesome or any other icon font library -->
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="dashboard" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a href="users-list" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>
-                                    Data Guru & Karyawan
+                                    Data Guru PNS & Honorer
                                 </p>
                             </a>
                         </li>

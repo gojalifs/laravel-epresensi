@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Presensi;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,16 @@ Route::get('/presensi', [App\Http\Controllers\web\PresensiController::class, 'in
 Route::get('/presensi-act', [App\Http\Controllers\web\PresensiController::class, 'action']);
 Route::get('/laporan', [App\Http\Controllers\web\PresensiController::class, 'index']);
 Route::get('/presensi/report', [App\Http\Controllers\web\PresensiController::class, 'laporanPresensi']);
+
+Route::get('/maps/{id}', function ($id) {
+    $presensi = Presensi::findOrFail($id);
+
+    return response()->json([
+        'latitude' => $presensi->latitude,
+        'longitude' => $presensi->longitude
+    ]);
+});
+
 
 Route::get('/revisi', [App\Http\Controllers\web\RevisiController::class, 'index']);
 Route::post('/revisi/{id}', [App\Http\Controllers\web\RevisiController::class, 'update'])->name('revisi.update');

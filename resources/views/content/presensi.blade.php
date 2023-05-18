@@ -3,8 +3,12 @@
 @stop
 
 @section('user-content')
+
+
+
+
     <div class="container" id="body">
-        <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
+        {{-- <div class="modal fade" id="mapModal" tabindex="-1" aria-labelledby="mapModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -18,10 +22,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
-
+        </div> --}}
 
         <div class="row">
             <div class="col-md-12">
@@ -72,10 +73,15 @@
                                 <td>{{ $presensi->longitude }}</td>
                                 <td>{{ $presensi->latitude }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal"
-                                        data-target="#mapModal" data-id="{{ $presensi->id }}">Lihat Map</button>
+                                    @if ($presensi->jam == '' || !$presensi->jam)
+                                    @else
+                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                                            data-long="{{ $presensi->longitude }}" data-lat="{{ $presensi->latitude }}"
+                                            data-target="#myModal{{ $presensi->id }}" data-mapid="map{{ $presensi->id }}">
+                                            Lihat Map
+                                        </button>
+                                    @endif
                                 </td>
-
                                 <td>
                                     @if ($presensi->jam == '' || !$presensi->jam)
                                     @else
@@ -87,6 +93,31 @@
                                     @endif
                                 </td>
                             </tr>
+
+                            <!-- Map Modal -->
+                            <div class="modal fade" id="myModal{{ $presensi->id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="myModalLabel" data-target="#myModal{{ $presensi->id }}">
+                                <div class="modal-dialog modal-xl" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myModalLabel">Map {{ $presensi->nama }}</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- map container -->
+                                            <div id="map{{ $presensi->id }}" style="height: 400px"></div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary"
+                                                data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <!-- Modal -->
                             <div class="modal fade" id="imageModal{{ $presensi->id }}" tabindex="-1" role="dialog"
                                 aria-labelledby="imageModalLabel{{ $presensi->id }}" aria-hidden="true">
@@ -117,35 +148,53 @@
     </div>
 @stop
 
-@section('scripts')
-    <script>
-        $('.btn-sm').on('show.bs.modal', function(event) {
-            var latitude = data.latitude;
-            var longitude = data.longitude;
-            console.log(latitude);
-            var button = $(event.relatedTarget);
-            var id = button.data('id');
+<script>
+    $(document).ready(function() {
+        var map = null; // Variable to hold the map instance
 
-            var map = L.map('mapContainer').setView([0, 0], 1);
+        $('.btn-sm').click(function() {
+            var targetModal = $(this).data('target');
+            var long = $(this).data('long');
+            var lat = $(this).data('lat');
+            var mapid = $(this).data('mapid');
+            // Remove the previous map instance if it exists
+            if (map) {
+                map.remove();
+                map = null;
+            }
 
-            var url = "{{ url('/maps') }}/" + id;
-            $.get(url, function(data) {
-                var latitude = data.latitude;
-                var longitude = data.longitude;
-                console.log(latitude);
 
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap contributors'
-                }).addTo(map);
+            map = L.map(mapid).setView([lat, long], 16);
 
-                L.marker([latitude, longitude]).addTo(map);
-                map.setView([latitude, longitude], 16);
+            // L.marker([lat, long]).addTo(map);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Reverse geocode the location to obtain the address
+            var geocodeUrl = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat +
+                '&lon=' +
+                long;
+            fetch(geocodeUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Add a marker to the map at a specific location
+                    var marker = L.marker([lat, long]).addTo(map);
+
+                    // Add a popup to the marker with the street name and location name
+                    marker.bindPopup("<b>" + data.display_name).openPopup();
+                });
+
+            // Comment out the below code to see the difference.
+            $(targetModal).on('shown.bs.modal', function() {
+                map.invalidateSize();
             });
         });
-    </script>
-@stop
+    });
+</script>
 
-{{-- Modal Untuk selfie Presensi --}}
+
 <script>
     $(document).ready(function() {
         $('.lihat-btn').click(function() {
@@ -156,6 +205,46 @@
         });
     });
 </script>
+
+{{-- <script>
+    $('.btn-sm').on('show.bs.modal', function(event) {
+        map.invalidateSize();
+        var long = 107.1895377;
+        var lat = -6.1981671;
+        // Create a Leaflet map centered on a specific location
+        var mymap = L.map('mapid').setView([lat, long], 16);
+
+        // Add a tile layer from OpenStreetMap
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "Map data &copy; <a href='https://www.openstreetmap.org/'>OpenStreetMap</a> contributors",
+            maxZoom: 18,
+        }).addTo(mymap);
+
+        // Reverse geocode the location to obtain the address
+        var geocodeUrl = 'https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=' + lat + '&lon=' +
+            long;
+        fetch(geocodeUrl)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Extract the street name and location name from the response
+                var address = data.address;
+                var street = address.residential || address.pedestrian || '';
+                var location =
+                    address.neighbourhood || address.suburb || address.city || address.town || address
+                    .village || '';
+
+                // Add a marker to the map at a specific location
+                var marker = L.marker([lat, long]).addTo(mymap);
+
+                // Add a popup to the marker with the street name and location name
+                marker.bindPopup("<b>" + data.display_name + "</b><br>" + location).openPopup();
+            });
+    });
+</script> --}}
+
+{{-- Modal Untuk selfie Presensi --}}
+
 
 @section('scripts')
     <script>
