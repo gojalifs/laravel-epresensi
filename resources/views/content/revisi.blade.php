@@ -32,7 +32,13 @@
                             <td>{{ $revisi->jam }}</td>
                             <td>{{ $revisi->yang_direvisi }}</td>
                             <td>{{ $revisi->alasan }}</td>
-                            <td>{{ $revisi->bukti }}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary btn-bukti" data-toggle='modal'
+                                    data-img="{{ asset('storage') . '/' . $revisi->bukti_path }}"
+                                    data-target="#imageModal{{ $revisi->id }}">
+                                    Lihat
+                                </button>
+                            </td>
                             <td>{{ $revisi->is_approved == 1 ? 'Disetujui' : ($revisi->is_approved == 2 ? 'Ditolak' : 'Belum Disetujui') }}
                             </td>
                             <td>
@@ -46,9 +52,48 @@
             </table>
         </div>
         <!-- /.card-body -->
+
+        <!-- Modal -->
+        <div class="modal fade" id="imageModal" tabindex="-1" role="dialog"
+            aria-labelledby="imageModalLabel{{ $revisi->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="imageModalLabel{{ $revisi->id }}">Gambar Presensi
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body-img">
+                        <img id="image" src="" class="img-fluid" width="400rem" height="400rem">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- /.card -->
 @stop
+
+<script>
+    $(document).ready(function() {
+        $('.btn-bukti').click(function() {
+            console.log('log');
+            var imgSrc = $(this).data('img');
+            console.log(imgSrc);
+            var targetModal = $(this).data('target');
+            console.log(targetModal);
+            $(targetModal + ' .modal-body-img img').attr('src', imgSrc);
+            document.getElementById('image').src = imgSrc;
+            $('#imageModal').modal('show');
+            
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {

@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->time('jam');
             $table->string('yang_direvisi', 20);
             $table->string('alasan', 100);
+            $table->string('bukti_path', 255)->nullable();
             $table->tinyInteger('is_approved')->default(0);
             $table->timestamps();
         });
