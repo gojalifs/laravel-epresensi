@@ -19,6 +19,7 @@ class RevisiAbsen extends Model
         'tanggal',
         'jam',
         'yang_direvisi',
+        'bukti_path',
         'alasan'
     ];
 }

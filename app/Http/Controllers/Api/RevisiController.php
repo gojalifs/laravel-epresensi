@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\RevisiRequest;
 use App\Http\Resources\RevisiResource;
 use App\Models\RevisiAbsen;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,8 +25,43 @@ class RevisiController extends Controller
      */
     public function store(RevisiRequest $request)
     {
-        $data = new RevisiResource(RevisiAbsen::create($request->validated()));
-        return $this->sendResponse($data, 'revisi sukses diajukan');
+        try {
+            $revisi = RevisiAbsen::create($request->validated());
+
+            date_default_timezone_set('Asia/Jakarta');
+
+            $nik = $request->input('user_nik');
+            $tanggal = date("Y-m-d", strtotime("today"));
+            $jam = date("H:i:s");
+
+            $name = User::where('nik', $nik)->value('nama');
+            $nama = str_replace(' ', '_', $name);
+
+            // Mendapatkan file gambar yang diupload
+            $file = $request->file('img');
+            $extension = $file->getClientOriginalExtension();
+            // Memformat nama file
+            $filename = 'revisi_' . $nik . '_' . $nama . '_' . $tanggal .
+                '_' . $jam . '.' . $extension;
+            // Menyimpan file gambar dengan nama yang sudah diformat
+            $img_path = $file->storeAs('public/img/revisi', $filename);
+            $newImgPath = str_replace('public/', '', $img_path);
+
+            $revisi->bukti_path = $newImgPath;
+            $revisi->save();
+
+            $data = RevisiAbsen::findOrFail($revisi->id);
+
+            return $this->sendResponse($data, 'Revisi sukses diajukan');
+        } catch (\Exception $e) {
+            // Tangani kesalahan
+            return response()->json([
+                'message' => 'Terjadi kesalahan',
+                'error' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => $e->getFile()
+            ], 500);
+        }
     }
 
     /**
@@ -58,7 +94,7 @@ class RevisiController extends Controller
         // Mengambil nilai-nilai dari array $result dan mengembalikannya dalam bentuk response
         $data = array_values($result);
         return $this->sendResponse($data, 'Izin Keluar found');
-// Query untuk mengambil seluruh data izin keluar berdasarkan user_nik tertentu
+        // Query untuk mengambil seluruh data izin keluar berdasarkan user_nik tertentu
 
         $absens = DB::table('ketidakhadirans')->where('nik', '=', $nik)
             ->get()->toArray();
@@ -91,7 +127,7 @@ class RevisiController extends Controller
      */
     public function update(RevisiRequest $request, RevisiAbsen $revisiAbsen)
     {
-        
+
     }
 
     /**
