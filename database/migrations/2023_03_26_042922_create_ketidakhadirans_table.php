@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->date('tanggal_selesai')->nullable();
             $table->string('alasan', 100);
             $table->String('potong_cuti')->default('tidak');
+            $table->String('jenis_cuti')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->string('approval_id', 100)->nullable();
             $table->timestamps();

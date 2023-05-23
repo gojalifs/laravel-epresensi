@@ -219,10 +219,10 @@
                         <th>Nama</th>
                         <th>NIPNS</th>
                         <th>Email</th>
-                        <th>Gender</th>
+                        <th>Jenis Kelamin</th>
                         <th>Telp</th>
-                        <th>Role</th>
-                        <th>Action</th>
+                        <th>Peran</th>
+                        <th>Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -239,9 +239,9 @@
                                 <a href="#" class="btn btn-primary" onclick="editUser({{ $user }})">Edit</a>
                                 @if (auth()->user()->nik != $user->nik)
                                     <a href="#" class="btn btn-danger delete-btn"
-                                        data-nik="{{ $user->nik }}">Delete</a>
+                                        data-nik="{{ $user->nik }}">Hapus</a>
                                 @else
-                                    <button class="btn btn-danger" disabled>Delete</button>
+                                    <button class="btn btn-danger" disabled>Hapus</button>
                                 @endif
                             </td>
                         </tr>

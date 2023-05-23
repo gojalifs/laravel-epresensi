@@ -14,6 +14,7 @@ class Ketidakhadiran extends Model
         'tanggal',
         'tanggal_selesai',
         'alasan',
-        'potong_cuti'
+        'potong_cuti',
+        'jenis_cuti'
     ];
 }

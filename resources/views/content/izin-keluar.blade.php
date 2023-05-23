@@ -19,8 +19,8 @@
                         <th>Jam Kembali</th>
                         <th>Alasan</th>
                         <th>Status Pengajuan</th>
-                        <th>Approval</th>
-                        <th>Action</th>
+                        <th>Persetujuan</th>
+                        <th>Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,7 +37,7 @@
                             <td>
                                 <button class="btn btn-success btn-setujui" data-id="{{ $keluar->id }}">Setujui</button>
                                 <button class="btn btn-danger btn-tolak" data-id="{{ $keluar->id }}">Tolak</button>
-                                <button class="btn btn-maroon btn-hapus" data-id="{{ $keluar->id }}">Delete</button>
+                                <button class="btn btn-maroon btn-hapus" data-id="{{ $keluar->id }}">Hapus</button>
                             </td>
                         </tr>
                     @endforeach

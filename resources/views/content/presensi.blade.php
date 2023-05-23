@@ -51,8 +51,8 @@
                             <th>Jam</th>
                             <th>Longitude</th>
                             <th>Latitude</th>
-                            <th>Maps</th>
-                            <th>Image</th>
+                            <th>Lokasi Maps</th>
+                            <th>Foto Selfie</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -88,7 +88,7 @@
                                         <button type="button" class="btn btn-primary lihat-btn"
                                             data-img="{{ asset('storage') . '/' . $presensi->img_path }}"
                                             data-target="#imageModal{{ $presensi->id }}">
-                                            Lihat
+                                            Lihat Foto
                                         </button>
                                     @endif
                                 </td>

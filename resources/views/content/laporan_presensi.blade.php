@@ -24,7 +24,8 @@
                         <tr>
                             <th>Nama</th>
                             <th>NIK</th>
-                            <th>Action</th>
+                            <th>NIPNS</th>
+                            <th>Rekapitulasi Data</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -33,6 +34,7 @@
 
                                 <td>{{ $user->nama }}</td>
                                 <td>{{ $user->nik }}</td>
+                                <td>{{ $user->nipns }}</td>
                                 <td><button type="button" class="btn btn-success get_report" data-id="{{ $user }}">
                                         Tampilkan sebagai PDF
                                     </button>

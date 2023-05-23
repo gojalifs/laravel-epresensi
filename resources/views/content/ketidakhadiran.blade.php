@@ -17,10 +17,11 @@
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
                         <th>Alasan</th>
-                        <th>Potong Cuti?</th>
+                        <th>Potong Cuti</th>
+                        <th>Jenis Cuti</th>
                         <th>Status</th>
-                        <th>Approval</th>
-                        <th>Action</th>
+                        <th>Persetujuan</th>
+                        <th>Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +33,7 @@
                             <td>{{ $ketidakhadiran->tanggal_selesai }}</td>
                             <td>{{ $ketidakhadiran->alasan }}</td>
                             <td>{{ $ketidakhadiran->potong_cuti }}</td>
+                            <td>{{ $ketidakhadiran->jenis_cuti }}</td>
                             <td>{{ $ketidakhadiran->status == 1 ? 'Disetujui' : ($ketidakhadiran->status == 2 ? 'Ditolak' : 'Belum Disetujui') }}
                             </td>
                             <td>{{ $ketidakhadiran->approval_name ? $ketidakhadiran->approval_name : '' }}</td>
@@ -39,7 +41,7 @@
                                 <button class="btn btn-success btn-setujui"
                                     data-id="{{ $ketidakhadiran->id }}">Setujui</button>
                                 <button class="btn btn-danger btn-tolak" data-id="{{ $ketidakhadiran->id }}">Tolak</button>
-                                <button class="btn btn-maroon btn-hapus" data-id="{{ $ketidakhadiran->id }}">Delete</button>
+                                <button class="btn btn-maroon btn-hapus" data-id="{{ $ketidakhadiran->id }}">Hapus</button>
                             </td>
                         </tr>
                     @endforeach

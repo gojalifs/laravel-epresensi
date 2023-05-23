@@ -1,6 +1,7 @@
 @extends('adminlte::auth.auth-page', ['auth_type' => 'login'])
 
 @section('adminlte_css_pre')
+    {{-- <link rel="stylesheet" href="{{ asset('https://94a4-125-160-226-173.ngrok-free.app/vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}"> --}}
     <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 @stop
 

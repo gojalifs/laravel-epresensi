@@ -15,6 +15,8 @@
                         @endif
 
                         {{ __('Haloo. Selamat datang di aplikasi admin presensi!') }}
+                        <br>
+                        {{ __('SMP Negeri 1 Karangbahagia') }}
                     </div>
                 </div>
             </div>

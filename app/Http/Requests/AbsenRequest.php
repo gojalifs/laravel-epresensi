@@ -26,7 +26,8 @@ class AbsenRequest extends FormRequest
             'tanggal' => 'required',
             'tanggal_selesai' => 'nullable',
             'potong_cuti' => 'required',
-            'alasan' => 'required'
+            'alasan' => 'required',
+            'jenis_cuti' => 'required'
         ];
     }
 }
