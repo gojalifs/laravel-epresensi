@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <title>@yield('title') - AdminLTE</title>
-    <link rel="stylesheet" href="{{ asset('AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.css') }}">
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('AdminLTE-3.2.0/dist/js/adminlte.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/vendor/adminlte/dist/css/adminlte.css') }}">
+    <script src="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/AdminLTE-3.2.0/dist/js/adminlte.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     {{-- Leaflet Dependency --}}
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"

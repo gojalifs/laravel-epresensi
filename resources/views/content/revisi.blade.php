@@ -20,7 +20,7 @@
                         <th>Alasan</th>
                         <th>Bukti</th>
                         <th>Status</th>
-                        <th>Action</th>
+                        <th>Tindakan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,7 +36,7 @@
                                 <button type="button" class="btn btn-primary btn-bukti" data-toggle='modal'
                                     data-img="{{ asset('storage') . '/' . $revisi->bukti_path }}"
                                     data-target="#imageModal{{ $revisi->id }}">
-                                    Lihat
+                                    Lihat Bukti
                                 </button>
                             </td>
                             <td>{{ $revisi->is_approved == 1 ? 'Disetujui' : ($revisi->is_approved == 2 ? 'Ditolak' : 'Belum Disetujui') }}
@@ -44,7 +44,7 @@
                             <td>
                                 <button class="btn btn-success btn-setujui" data-id="{{ $revisi->id }}">Setujui</button>
                                 <button class="btn btn-danger btn-tolak" data-id="{{ $revisi->id }}">Tolak</button>
-                                <button class="btn btn-maroon btn-hapus" data-id="{{ $revisi->id }}">Delete</button>
+                                <button class="btn btn-maroon btn-hapus" data-id="{{ $revisi->id }}">Hapus</button>
                             </td>
                         </tr>
                     @endforeach

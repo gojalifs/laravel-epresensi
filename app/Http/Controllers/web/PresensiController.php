@@ -2,12 +2,15 @@
 namespace App\Http\Controllers\web;
 
 use App\Http\Controllers\Controller;
+use App\Models\IzinKeluar;
+use App\Models\Ketidakhadiran;
 use App\Models\RevisiAbsen;
 use App\Models\User;
 use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use IntlDateFormatter;
 
 
 class PresensiController extends Controller
@@ -63,30 +66,99 @@ class PresensiController extends Controller
 
     public function laporanPresensi(Request $request)
     {
-        $users = User::all();
         $nik = $request->input('nik');
 
         $tanggal = $request->input('tanggal'); // asumsi request menggunakan metode POST
         $tanggal_array = explode('-', $tanggal);
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => $tanggal_array,
-        // ]);
+        $tanggalFormatted = date('y-m-d');
+
+        $bulan = date('m', strtotime($tanggal));
+
+        setlocale(LC_TIME, 'id_ID'); // Mengatur locale ke Bahasa Indonesia
+        $formatter = new IntlDateFormatter('id_ID', IntlDateFormatter::FULL, IntlDateFormatter::NONE);
+        $formatter->setPattern('MMMM y');
+        $month = $formatter->format(strtotime($tanggal));
+
         $bulan = $tanggal_array[1];
         $tahun = $tanggal_array[0];
-        // $tanggal_array[0] -> tahun
-        // $tanggal_array[1] -> bulan
-        // $tanggal_array[2] -> hari
+        $user = User::where('nik', $nik)->first();
 
 
         $report = DB::select('CALL sp_laporan_bulanan(?, ?, ?)', [$nik, $bulan, $tahun]);
 
-        $data = [
-            'report' => $report,
-            'users' => $users
-        ];
+        // $leaves = Ketidakhadiran::where('nik', $nik)
+        //     ->whereMonth('tanggal', $bulan)
+        //     ->get();
 
-        $user = User::where('nik', $nik)->first();
+        // $leaves = DB::select(
+        //     "SELECT * FROM ketidakhadirans WHERE nik = ? AND ((tanggal <= ? AND tanggal_selesai >= ?) OR month(tanggal) = ?)",
+        //     [$nik, $tanggalFormatted, $tanggalFormatted, $bulan]
+        // );
+
+        $leaves = Ketidakhadiran::where('nik', $nik)
+            ->where(function ($query) use ($tanggalFormatted) {
+                $query->whereDate('tanggal', '<=', $tanggalFormatted)
+                    ->whereDate('tanggal_selesai', '>=', $tanggalFormatted);
+            })
+            ->orWhereMonth('tanggal', 5)
+            ->get();
+
+        foreach ($leaves as $leave) {
+            if ($leave->approval_id) {
+                $approval = User::where('nik', $leave->approval_id)->first()->value('nama');
+                $leave->approval = $approval;
+            }
+            if ($leave->status == 0) {
+                $leave->status = 'Belum Disetujui';
+            } else if ($leave->status == 1) {
+                $leave->status = 'Disetujui';
+            } else {
+                $leave->status = 'Ditolak';
+            }
+        }
+
+        $revision = RevisiAbsen::where('user_nik', $nik)
+            ->whereMonth('tanggal', $bulan)->get();
+
+        foreach ($revision as $revise) {
+            // if ($revise->approval_id) {
+            //     $approval = User::where('nik', $nik)->first()->value('nama');
+            //     $leave->approval = $approval;
+            // }
+            if ($revise->is_approved == 0) {
+                $revise->is_approved = 'Belum Disetujui';
+            } else if ($revise->is_approved == 1) {
+                $revise->is_approved = 'Disetujui';
+            } else {
+                $revise->is_approved = 'Ditolak';
+            }
+        }
+
+        $exits = IzinKeluar::where('user_nik', $nik)
+            ->whereMonth('tanggal', $bulan)->get();
+
+        foreach ($exits as $exit) {
+            if ($exit->approval) {
+                $approval = User::where('nik', $exit->approval)->first()->value('nama');
+                $exit->approval = $approval;
+            }
+            if ($exit->is_approved == 0) {
+                $exit->is_approved = 'Belum Disetujui';
+            } else if ($exit->is_approved == 1) {
+                $exit->is_approved = 'Disetujui';
+            } else {
+                $exit->is_approved = 'Ditolak';
+            }
+        }
+
+        $data = [
+            'users' => $user,
+            'report' => $report,
+            'leaves' => $leaves,
+            'revisions' => $revision,
+            'exits' => $exits,
+            'month' => $month
+        ];
 
         $fileName = 'laporan_presensi' . '_' . $user->nama . '_' . $user->nik . '.pdf';
 
