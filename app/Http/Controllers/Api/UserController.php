@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\Password;
 use App\Models\User;
 use Auth;
@@ -20,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        abort(404, 'User Not Found');
     }
 
     /**
@@ -170,14 +171,34 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(int $nik)
     {
-        //
+        // $user = DB::table('users')->where('nik', '=', $nik)
+        //     ->get();
+        $user = User::where('nik', $nik)->first();
+
+        if (!$user) {
+            abort(404, 'User Not Found');
+        }
+
+        return response()->json([
+            'id' => $user->id,
+            'nik' => $user->nik,
+            'nama' => $user->nama,
+            'nipns' => $user->nipns,
+            'email' => $user->email,
+            'gender' => $user->gender,
+            'telp' => $user->telp,
+            'isAdmin' => $user->is_admin,
+            'avaPath' => $user->ava_path,
+            'createdAt' => $user->created_at,
+            'updatedAt' => $user->updated_at
+        ]);
     }
 
     public function loginStatus(Request $request)
     {
-        return $this->sendResponse(null, 'authenticated');
+        // return $this->sendResponse(null, 'authenticated');
         // Get the currently authenticated user
         $user = Auth::user();
 
@@ -193,7 +214,8 @@ class UserController extends Controller
         // Loop through the tokens and check if the provided value matches
         $valid_token = false;
         foreach ($tokens as $token) {
-            if ($token->id === $provided_token_value) {
+            // if ($token->id == $provided_token_value) {
+            if (str_contains($provided_token_value, $token->id)) {
                 $valid_token = true;
                 break;
             }
@@ -201,9 +223,12 @@ class UserController extends Controller
         // Check if the token value matches the provided value
         if ($valid_token) {
             echo 'The token is valid and has not been changed.';
+            return $this->sendResponse($user, 'Authenticated');
         } else {
             echo 'The token is not valid or has been changed.';
+            return $this->sendResponse($tokens, 'Unauthenticated');
         }
+
     }
 
     /**
@@ -317,12 +342,12 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Request $request, User $user)
-{
-    $user->delete();
-    return response()->json([
-        'success' => true,
-        'message' => 'User deleted successfully',
-    ]);
-}
+    {
+        $user->delete();
+        return response()->json([
+            'success' => true,
+            'message' => 'User deleted successfully',
+        ]);
+    }
 
 }

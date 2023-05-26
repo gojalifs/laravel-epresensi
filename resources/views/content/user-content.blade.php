@@ -177,11 +177,77 @@
                 });
             });
         })
-
-        // Change the form's action attribute to the correct URL
-        // $('#form-add-user').attr('action', '/users/update');
     }
 </script>
+
+<script>
+    $(document).ready(function() {
+        // ...
+
+        $(document).on('click', '.btn-del', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var nik = $(this).data('nik');
+
+            if (!$(this).hasClass('loading')) {
+                $(this).addClass('loading');
+                $('#loadingModal').modal('show');
+                updateUserAdminStatus(0, nik);
+            }
+        });
+
+        $(document).on('click', '.btn-set', function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            var nik = $(this).data('nik');
+
+            if (!$(this).hasClass('loading')) {
+                $(this).addClass('loading');
+                $('#loadingModal').modal('show');
+                updateUserAdminStatus(1, nik);
+            }
+        });
+
+        function updateUserAdminStatus(isAdmin, nik) {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: '/users/update/role',
+                type: 'POST',
+                data: {
+                    is_admin: isAdmin,
+                    nik: nik
+                },
+                success: function(response) {
+                    var urllist = 'users-list';
+                    $('#body').load(urllist);
+                    $('#loadingModal').modal('hide');
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                },
+                error: function(xhr, status, error) {
+                    $('#loadingModal').modal('hide');
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
+                    var errorMessage = xhr.responseJSON;
+                    console.log('errorMessage ' + error);
+                },
+                complete: function() {
+                    $('.btn-del, .btn-set').removeClass('loading');
+                }
+            });
+        }
+
+        // ...
+    });
+</script>
+
 
 
 @section('user-content')
@@ -237,6 +303,19 @@
                             <td>{{ $user->is_admin == 1 ? 'Admin' : '-' }}</td>
                             <td>
                                 <a href="#" class="btn btn-primary" onclick="editUser({{ $user }})">Edit</a>
+                                @if (auth()->user()->nik != $user->nik)
+                                    @if ($user->is_admin == 1)
+                                        <button href="#" class="btn btn-success btn-del"
+                                            data-nik="{{ $user->nik }}">
+                                            Hapus Peran Admin
+                                        </button>
+                                    @else
+                                        <button href="#" class="btn btn-success btn-set"
+                                            data-nik="{{ $user->nik }}">
+                                            Jadikan Admin
+                                        </button>
+                                    @endif
+                                @endif
                                 @if (auth()->user()->nik != $user->nik)
                                     <a href="#" class="btn btn-danger delete-btn"
                                         data-nik="{{ $user->nik }}">Hapus</a>
@@ -299,17 +378,17 @@
                             <label for="password">Password</label>
                             <input type="text" class="form-control" id="password" name="password">
                         </div>
-                        <div class="form-group">
+                        {{-- <div class="form-group">
                             <div class="checkbox">
                                 <label>
                                     <input type="checkbox" id="is_admin" name="is_admin"> Jadikan Sebagai Admin
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" id="add-button">Tambah</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                         </div>
                     </form>
                 </div>
@@ -320,6 +399,22 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+
+    {{-- Spinner Modal --}}
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <i class="fas fa-spinner fa-spin fa-3x"></i>
+                        <h4 class="mt-2">Loading...</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @stop
 
 @yield('user-content')
