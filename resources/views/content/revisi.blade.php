@@ -20,6 +20,7 @@
                         <th>Alasan</th>
                         <th>Bukti</th>
                         <th>Status</th>
+                        <th>Persetujuan</th>
                         <th>Tindakan</th>
                     </tr>
                 </thead>
@@ -41,6 +42,7 @@
                             </td>
                             <td>{{ $revisi->is_approved == 1 ? 'Disetujui' : ($revisi->is_approved == 2 ? 'Ditolak' : 'Belum Disetujui') }}
                             </td>
+                            <td>{{ $revisi->approval_name }}</td>
                             <td>
                                 <button class="btn btn-success btn-setujui" data-id="{{ $revisi->id }}">Setujui</button>
                                 <button class="btn btn-danger btn-tolak" data-id="{{ $revisi->id }}">Tolak</button>
@@ -90,7 +92,7 @@
             $(targetModal + ' .modal-body-img img').attr('src', imgSrc);
             document.getElementById('image').src = imgSrc;
             $('#imageModal').modal('show');
-            
+
         });
     });
 </script>

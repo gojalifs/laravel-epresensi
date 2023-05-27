@@ -283,7 +283,7 @@
                     <tr>
                         <th>NIK</th>
                         <th>Nama</th>
-                        <th>NIPNS</th>
+                        <th>NIP</th>
                         <th>Email</th>
                         <th>Jenis Kelamin</th>
                         <th>Telp</th>
@@ -353,7 +353,7 @@
                             <input type="text" class="form-control" id="name" name="name" required>
                         </div>
                         <div class="form-group">
-                            <label for="nipns">NIPNS</label>
+                            <label for="nipns">NIP</label>
                             <input type="text" class="form-control" id="nipns" name="nipns">
                         </div>
                         <div class="form-group">
