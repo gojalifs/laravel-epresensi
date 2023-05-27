@@ -46,7 +46,7 @@
                             <th>Nama</th>
                             <th>NIK</th>
                             <th>Jenis</th>
-                            <th>NIPNS</th>
+                            <th>NIP</th>
                             <th>Status</th>
                             <th>Jam</th>
                             <th>Longitude</th>

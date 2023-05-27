@@ -24,7 +24,7 @@
                         <tr>
                             <th>Nama</th>
                             <th>NIK</th>
-                            <th>NIPNS</th>
+                            <th>NIP</th>
                             <th>Rekapitulasi Data</th>
                         </tr>
                     </thead>

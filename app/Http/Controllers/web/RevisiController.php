@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RevisiAbsen;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RevisiController extends Controller
 {
@@ -25,6 +26,10 @@ class RevisiController extends Controller
         foreach ($revisian as $revisi) {
             $name = User::where('nik', $revisi->user_nik)->value('nama');
             $revisi->name = $name;
+            if (!empty($revisi->approval)) {
+                $approval_name = User::where('nik', $revisi->approval)->value('nama');
+                $revisi->approval_name = $approval_name;
+            }
         }
         return view('content.revisi')->with('revisian', $revisian);
     }
@@ -46,9 +51,21 @@ class RevisiController extends Controller
                 return response()->json(['message' => 'Invalid input'], 400);
             }
 
+            // set approval to the name of the user who approves/rejects the request
+            $nik = Auth::user()->nik;
+            $revisi->approval = $nik;
+
             $revisi->save();
 
             $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
+            foreach ($revisian as $revisi) {
+                $name = User::where('nik', $revisi->user_nik)->value('nama');
+                $revisi->name = $name;
+                if (!empty($revisi->approval)) {
+                    $approval_name = User::where('nik', $revisi->approval)->value('nama');
+                    $revisi->approval_name = $approval_name;
+                }
+            }
             // return success message
             return view('content.revisi')->with('revisian', $revisian);
 

@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->string('alasan', 100);
             $table->string('bukti_path', 255)->nullable();
             $table->tinyInteger('is_approved')->default(0);
+            $table->string('approval', 20)->nullable();
             $table->timestamps();
         });
     }
