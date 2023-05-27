@@ -22,6 +22,7 @@ class RevisiResource extends JsonResource
             'reason' => $this->alasan,
             'revised' => $this->yang_direvisi,
             'isApproved' => $this->is_approved,
+            'approval' => $this->approval,
         ];
     }
 }
