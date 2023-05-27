@@ -38,7 +38,7 @@
         {{-- NIPNS field --}}
         <div class="input-group mb-3">
             <input type="text" name="nipns" class="form-control @error('nipns') is-invalid @enderror"
-                   value="{{ old('nipns') }}" placeholder="NIPNS (kosongkan jika tidak ada)" autofocus>
+                   value="{{ old('nipns') }}" placeholder="NIP (kosongkan jika tidak ada)" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">

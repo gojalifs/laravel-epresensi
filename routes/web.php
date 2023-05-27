@@ -34,6 +34,7 @@ Route::get('/users-list', [App\Http\Controllers\web\WebUserController::class, 'i
 Route::post('/users/search', [App\Http\Controllers\web\WebUserController::class, 'search'])->name('users.search');
 Route::post('/users/add', [App\Http\Controllers\Api\UserController::class, 'store'])->name('users.add');
 Route::post('/users/update', [App\Http\Controllers\web\WebUserController::class, 'updateUser'])->name('users.update');
+Route::post('/users/update/role', [App\Http\Controllers\web\WebUserController::class, 'setRole'])->name('users.setRole');
 Route::delete('/users/delete', [App\Http\Controllers\web\WebUserController::class, 'delete'])->name('users.delete');
 
 Route::get('/cuti', [App\Http\Controllers\web\CutiController::class, 'index']);

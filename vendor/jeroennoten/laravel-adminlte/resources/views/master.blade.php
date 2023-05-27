@@ -24,9 +24,9 @@
 
     {{-- Base Stylesheets --}}
     @if(!config('adminlte.enabled_laravel_mix'))
-        <link rel="stylesheet" href="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/vendor/fontawesome-free/css/all.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('https://ba7a-2404-c0-2020-00-cc-e996.ngrok-free.app/vendor/adminlte/dist/css/adminlte.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('https://7d8d-2404-c0-5c40-00-44d-26bb.ngrok-free.app/vendor/fontawesome-free/css/all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('https://7d8d-2404-c0-5c40-00-44d-26bb.ngrok-free.app/vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('https://7d8d-2404-c0-5c40-00-44d-26bb.ngrok-free.app/vendor/adminlte/dist/css/adminlte.min.css') }}">
 
         @if(config('adminlte.google_fonts.allowed', true))
             <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">

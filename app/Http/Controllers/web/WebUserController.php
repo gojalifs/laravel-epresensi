@@ -157,6 +157,48 @@ class WebUserController extends Controller
         }
     }
 
+    public function setRole(Request $request)
+    {
+        try {
+            $request->validate([
+                'is_admin' => 'required',
+                'nik' => 'required'
+            ]);
+
+            $nik = $request->input('nik');
+
+            $user = User::where('nik', $nik)->first();
+
+            // Jika user tidak ditemukan, kembalikan respons error 404
+            if (!$user) {
+                return response()->json([
+                    'error' => 'User not found',
+                    'nik' => $nik,
+                ], 404);
+            }
+
+            // Perbarui nilai kolom is_admin
+            $user->is_admin = $request->input('is_admin');
+            $user->save();
+
+            // Kembalikan respons berhasil
+            $users = User::all();
+            return view('content.user-content')->with('users', $users);
+            // return view('content.user-content', ['users' => $users]);
+            return response()->json([
+                'message' => 'User updated successfully',
+                'users' => $user,
+            ]);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            // Tangkap pengecualian ModelNotFoundException dan kembalikan respons error 404
+            return response()->json(['error' => 'User not found'], 404);
+        } catch (\Exception $e) {
+            // Tangkap pengecualian umum dan kembalikan respons error 500 dengan pesan pengecualian
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+
     public function admins(Request $request)
     {
         $admins = Admin::all();

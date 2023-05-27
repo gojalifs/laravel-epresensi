@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('absen', AbsenController::class);
     Route::apiResource('presen', PresensiController::class);
     Route::apiResource('revisi', RevisiController::class);
+    Route::apiResource('user/data', UserController::class);
     Route::post('/daily', [TodayPresention::class, 'getTodayPresention']);
     Route::post('/dailycount', [TodayPresention::class, 'presentCount']);
     Route::post('/dailyreport', [Reporting::class, 'getDailyReport']);
