@@ -37,10 +37,10 @@ class IzinKeluarController extends Controller
         $izins = DB::table('izin_keluars')->where('user_nik', '=', $nik)
             ->get()->toArray();
 
-        // Jika tidak ada izin keluar dengan user_nik tersebut, maka tampilkan pesan error 404
-        if (!$izins) {
-            abort(404, 'Izin Keluar Not Found');
-        }
+        // // Jika tidak ada izin keluar dengan user_nik tersebut, maka tampilkan pesan error 404
+        // if (!$izins) {
+        //     abort(404, 'Izin Keluar Not Found');
+        // }
 
         // Membuat array untuk menyimpan setiap izin keluar
         $result = [];

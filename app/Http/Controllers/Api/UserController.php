@@ -177,9 +177,9 @@ class UserController extends Controller
         //     ->get();
         $user = User::where('nik', $nik)->first();
 
-        if (!$user) {
-            abort(404, 'User Not Found');
-        }
+        // if (!$user) {
+        //     abort(404, 'User Not Found');
+        // }
 
         return response()->json([
             'id' => $user->id,
