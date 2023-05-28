@@ -45,7 +45,7 @@
                         <tr>
                             <th>Nama</th>
                             <th>NIK</th>
-                            <th>Jenis</th>
+                            <th>Keterangan</th>
                             <th>NIP</th>
                             <th>Status</th>
                             <th>Jam</th>
