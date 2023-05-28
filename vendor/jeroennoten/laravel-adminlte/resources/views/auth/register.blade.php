@@ -35,60 +35,6 @@
             @enderror
         </div>
 
-        {{-- NIPNS field --}}
-        <div class="input-group mb-3">
-            <input type="text" name="nipns" class="form-control @error('nipns') is-invalid @enderror"
-                   value="{{ old('nipns') }}" placeholder="NIPNS (kosongkan jika tidak ada)" autofocus>
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-
-            @error('NIPNS')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-
-        {{-- gender field --}}
-        <div class="input-group mb-3">
-            <input type="text" name="gender" class="form-control @error('gender') is-invalid @enderror"
-                   value="{{ old('gender') }}" placeholder="Jenis Kelamin (L/P)" autofocus>
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-
-            @error('gender')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-        
-        {{-- telp field --}}
-        <div class="input-group mb-3">
-            <input type="text" name="telp" class="form-control @error('telp') is-invalid @enderror"
-                   value="{{ old('telp') }}" placeholder="Nomor HP" autofocus>
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
-            </div>
-
-            @error('telp')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
-        
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"

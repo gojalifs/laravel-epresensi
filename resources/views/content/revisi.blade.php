@@ -49,33 +49,34 @@
                                 <button class="btn btn-maroon btn-hapus" data-id="{{ $revisi->id }}">Hapus</button>
                             </td>
                         </tr>
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="imageModal" tabindex="-1" role="dialog"
+                            aria-labelledby="imageModalLabel{{ $revisi->id }}" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="imageModalLabel{{ $revisi->id }}">Gambar Presensi
+                                        </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body-img">
+                                        <img id="image" src="" class="img-fluid" width="400rem" height="400rem">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                 </tbody>
             </table>
         </div>
         <!-- /.card-body -->
 
-        <!-- Modal -->
-        <div class="modal fade" id="imageModal" tabindex="-1" role="dialog"
-            aria-labelledby="imageModalLabel{{ $revisi->id }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="imageModalLabel{{ $revisi->id }}">Gambar Presensi
-                        </h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body-img">
-                        <img id="image" src="" class="img-fluid" width="400rem" height="400rem">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div>
     <!-- /.card -->

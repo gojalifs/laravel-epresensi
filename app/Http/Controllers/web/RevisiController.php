@@ -21,17 +21,21 @@ class RevisiController extends Controller
     }
     public function index()
     {
-        $revisian = RevisiAbsen::all()->sortDesc();
+        try {
+            $revisian = RevisiAbsen::all()->sortDesc();
 
-        foreach ($revisian as $revisi) {
-            $name = User::where('nik', $revisi->user_nik)->value('nama');
-            $revisi->name = $name;
-            if (!empty($revisi->approval)) {
-                $approval_name = User::where('nik', $revisi->approval)->value('nama');
-                $revisi->approval_name = $approval_name;
+            foreach ($revisian as $revisi) {
+                $name = User::where('nik', $revisi->user_nik)->value('nama');
+                $revisi->name = $name;
+                if (!empty($revisi->approval)) {
+                    $approval_name = User::where('nik', $revisi->approval)->value('nama');
+                    $revisi->approval_name = $approval_name;
+                }
             }
+            return view('content.revisi')->with('revisian', $revisian);
+        } catch (\Exception $e) {
+            echo "Error: " . $e->getMessage();
         }
-        return view('content.revisi')->with('revisian', $revisian);
     }
 
 
