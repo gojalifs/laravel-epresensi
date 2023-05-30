@@ -43,14 +43,12 @@
                 <table class="table table-bordered" id="table-presensi">
                     <thead>
                         <tr>
-                            <th>Nama</th>
                             <th>NIK</th>
+                            <th>Nama</th>
                             <th>Keterangan</th>
                             <th>NIP</th>
                             <th>Status</th>
                             <th>Jam</th>
-                            <th>Longitude</th>
-                            <th>Latitude</th>
                             <th>Lokasi Maps</th>
                             <th>Foto Selfie</th>
                         </tr>
@@ -59,8 +57,8 @@
                         @foreach ($presensis as $presensi)
                             <tr
                                 @if ($presensi->jam == '' || !$presensi->jam) class="bg-danger text-white" @else class="bg-green text-white" @endif>
-                                <td>{{ $presensi->nama }}</td>
                                 <td>{{ $presensi->nik }}</td>
+                                <td>{{ $presensi->nama }}</td>
                                 <td>{{ $presensi->jenis }}</td>
                                 <td>{{ $presensi->nipns }}</td>
                                 @if ($presensi->nipns == '' || !$presensi->nipns)
@@ -70,8 +68,6 @@
                                     </button>
                                 @endif
                                 <td>{{ $presensi->jam }}</td>
-                                <td>{{ $presensi->longitude }}</td>
-                                <td>{{ $presensi->latitude }}</td>
                                 <td>
                                     @if ($presensi->jam == '' || !$presensi->jam)
                                     @else

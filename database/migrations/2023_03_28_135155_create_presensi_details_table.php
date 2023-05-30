@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->foreign('id_presensi')->references('id_presensi')->on('presensis')
                 ->cascadeOnUpdate()
                 ->cascadeOnDelete();
-            $table->enum('jenis', ['masuk', 'keluar']);
+            $table->enum('jenis', ['masuk', 'pulang']);
             $table->time('jam');
             $table->string('longitude', 20);
             $table->string('latitude', 20);

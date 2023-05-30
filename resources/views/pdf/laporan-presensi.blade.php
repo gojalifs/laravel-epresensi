@@ -52,7 +52,7 @@
 
     <p>Nama : {{ $users->nama }}</p>
     <p>NIK : {{ $users->nik }}</p>
-    <p>NIPNS : {{ $users->nipns }}</p>
+    <p>NIP : {{ $users->nipns }}</p>
     <p>Email : {{ $users->email }}</p>
     <p>Telp : {{ $users->telp }}</p>
 

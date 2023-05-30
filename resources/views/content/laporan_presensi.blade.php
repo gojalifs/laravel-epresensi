@@ -22,19 +22,25 @@
                 <table class="table table-bordered" id="monthly-presensi">
                     <thead>
                         <tr>
-                            <th>Nama</th>
                             <th>NIK</th>
+                            <th>Nama</th>
                             <th>NIP</th>
+                            <th>Status</th>
                             <th>Rekapitulasi Data</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
-
-                                <td>{{ $user->nama }}</td>
                                 <td>{{ $user->nik }}</td>
+                                <td>{{ $user->nama }}</td>
                                 <td>{{ $user->nipns }}</td>
+                                @if ($user->nipns == '' || !$user->nipns)
+                                    <td>Honorer</td>
+                                @else
+                                    <td>PNS</td>
+                                    </button>
+                                @endif
                                 <td><button type="button" class="btn btn-success get_report" data-id="{{ $user }}">
                                         Tampilkan sebagai PDF
                                     </button>

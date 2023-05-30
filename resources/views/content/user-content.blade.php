@@ -284,6 +284,7 @@
                         <th>NIK</th>
                         <th>Nama</th>
                         <th>NIP</th>
+                        <th>Status</th>
                         <th>Email</th>
                         <th>Jenis Kelamin</th>
                         <th>Telp</th>
@@ -297,6 +298,12 @@
                             <td>{{ $user->nik }}</td>
                             <td>{{ $user->nama }}</td>
                             <td>{{ $user->nipns }}</td>
+                            @if ($user->nipns == '' || !$user->nipns)
+                                    <td>Honorer</td>
+                                @else
+                                    <td>PNS</td>
+                                    </button>
+                                @endif
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->gender }}</td>
                             <td>{{ $user->telp }}</td>
