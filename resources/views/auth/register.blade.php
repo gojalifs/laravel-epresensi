@@ -1,14 +1,14 @@
 @extends('adminlte::auth.register')
 
-@php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
-@php( $register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register') )
+@php($login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login'))
+@php($register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register'))
 
 @if (config('adminlte.use_route_url', false))
-    @php( $login_url = $login_url ? route($login_url) : '' )
-    @php( $register_url = $register_url ? route($register_url) : '' )
+    @php($login_url = $login_url ? route($login_url) : '')
+    @php($register_url = $register_url ? route($register_url) : '')
 @else
-    @php( $login_url = $login_url ? url($login_url) : '' )
-    @php( $register_url = $register_url ? url($register_url) : '' )
+    @php($login_url = $login_url ? url($login_url) : '')
+    @php($register_url = $register_url ? url($register_url) : '')
 @endif
 
 @section('auth_header', __('adminlte::adminlte.register_message'))
@@ -20,7 +20,7 @@
         {{-- Name field --}}
         <div class="input-group mb-3">
             <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                   value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
+                value="{{ old('name') }}" placeholder="{{ __('adminlte::adminlte.full_name') }}" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -35,10 +35,10 @@
             @enderror
         </div>
 
-        {{-- NIPNS field --}}
+        {{-- NIP field --}}
         <div class="input-group mb-3">
             <input type="text" name="nipns" class="form-control @error('nipns') is-invalid @enderror"
-                   value="{{ old('nipns') }}" placeholder="NIP (kosongkan jika tidak ada)" autofocus>
+                value="{{ old('nipns') }}" placeholder="NIP (kosongkan jika tidak ada)" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -53,28 +53,31 @@
             @enderror
         </div>
 
+
         {{-- gender field --}}
-        <div class="input-group mb-3">
-            <input type="text" name="gender" class="form-control @error('gender') is-invalid @enderror"
-                   value="{{ old('gender') }}" placeholder="Jenis Kelamin (L/P)" autofocus>
-
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user {{ config('adminlte.classes_auth_icon', '') }}"></span>
-                </div>
+        <div class="form-group">
+            <label for="gender">Jenis Kelamin</label>
+            <div class="form-check form-check-inline ml-3">
+                <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender"
+                    id="gender_male" value="L" {{ old('gender') == 'L' ? 'checked' : '' }}>
+                <label class="form-check-label ml-2" for="gender_male">L</label>
             </div>
-
+            <div class="form-check form-check-inline">
+                <input class="form-check-input @error('gender') is-invalid @enderror" type="radio" name="gender"
+                    id="gender_female" value="P" {{ old('gender') == 'P' ? 'checked' : '' }}>
+                <label class="form-check-label ml-2" for="gender_female">P</label>
+            </div>
             @error('gender')
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
                 </span>
             @enderror
         </div>
-        
+
         {{-- telp field --}}
         <div class="input-group mb-3">
             <input type="text" name="telp" class="form-control @error('telp') is-invalid @enderror"
-                   value="{{ old('telp') }}" placeholder="Nomor HP" autofocus>
+                value="{{ old('telp') }}" placeholder="Nomor HP" autofocus>
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -88,11 +91,11 @@
                 </span>
             @enderror
         </div>
-        
+
         {{-- Email field --}}
         <div class="input-group mb-3">
             <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                   value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
+                value="{{ old('email') }}" placeholder="{{ __('adminlte::adminlte.email') }}">
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -110,7 +113,7 @@
         {{-- Password field --}}
         <div class="input-group mb-3">
             <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.password') }}">
+                placeholder="{{ __('adminlte::adminlte.password') }}">
 
             <div class="input-group-append">
                 <div class="input-group-text">
@@ -128,8 +131,8 @@
         {{-- Confirm password field --}}
         <div class="input-group mb-3">
             <input type="password" name="password_confirmation"
-                   class="form-control @error('password_confirmation') is-invalid @enderror"
-                   placeholder="{{ __('adminlte::adminlte.retype_password') }}">
+                class="form-control @error('password_confirmation') is-invalid @enderror"
+                placeholder="{{ __('adminlte::adminlte.retype_password') }}">
 
             <div class="input-group-append">
                 <div class="input-group-text">

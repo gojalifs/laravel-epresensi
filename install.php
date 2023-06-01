@@ -6,7 +6,7 @@
     echo "Output Composer Install: " . implode("\n", $output1) . "\n";
 
     // Artisan Migrate
-    $cmd2 = 'php artisan migrate';
+    $cmd2 = 'php artisan migrate --force';
     exec($cmd2, $output2);
     echo "Output Artisan Migrate: " . implode("\n", $output2) . "\n";
 
