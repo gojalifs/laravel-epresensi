@@ -82,7 +82,7 @@ class UserController extends Controller
         ]);
 
         Password::create([
-            'user_nik' => $nik,
+            'email' => $request->email,
             'pass' => Hash::make($request->password),
         ]);
 
@@ -103,7 +103,7 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nik' => 'required|string',
+            'email' => 'required|string|email',
             'password' => 'required|string'
         ]);
 
@@ -114,7 +114,7 @@ class UserController extends Controller
             ], 400);
         }
 
-        $user = User::where('nik', $request->nik)->first();
+        $user = User::where('email', $request->email)->first();
 
         if (!$user) {
             return response()->json([
@@ -123,7 +123,7 @@ class UserController extends Controller
             ], 401);
         }
 
-        $password = Password::where('user_nik', $request->nik)->first();
+        $password = Password::where('email', $request->email)->first();
 
         if (!$password || !Hash::check($request->password, $password->pass)) {
             return response()->json([
