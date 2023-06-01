@@ -1,8 +1,8 @@
 @extends('adminlte::auth.login')
 
-@php( $login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login') )
-@php( $register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register') )
-@php( $password_reset_url = View::getSection('password_reset_url') ?? config('adminlte.password_reset_url', 'password/reset') )
+@php($login_url = View::getSection('login_url') ?? config('adminlte.login_url', 'login'))
+@php($register_url = View::getSection('register_url') ?? config('adminlte.register_url', 'register'))
+@php($password_reset_url = View::getSection('password_reset_url') ?? config('adminlte.password_reset_url', 'password/reset'))
 @php($is_admin = DB::table('users')->where('is_admin', 1)->exists())
 
 @if (config('adminlte.use_route_url', false))
@@ -47,6 +47,9 @@
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-lock {{ config('adminlte.classes_auth_icon', '') }}"></span>
+                </div>
+                <div class="input-group-text toggle-password">
+                    <i class="fas fa-eye"></i>
                 </div>
             </div>
 
@@ -100,3 +103,21 @@
         </p>
     @endif
 @stop
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.toggle-password').click(function() {
+            var input = $(this).parent().prev('input');
+            var type = input.attr('type');
+
+            if (type === 'password') {
+                input.attr('type', 'text');
+                $(this).find('i').removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                input.attr('type', 'password');
+                $(this).find('i').removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+    });
+</script>
