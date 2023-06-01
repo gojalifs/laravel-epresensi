@@ -37,10 +37,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/updateuser', [UserController::class, 'updateUser']);
     Route::post('/updateava', [UserController::class, 'updateAvatar']);
     Route::post('user/checkstatus', [UserController::class, 'loginStatus']);
-    Route::get('logout', [UserController::class, 'logout']);
 });
 
 Route::post('user/login', [UserController::class, 'login']);
+Route::get('logout', [UserController::class, 'logout']);
 Route::post('user/register', [UserController::class, 'store']);
 
 Route::get('storage/{filename}', function ($filename) {
