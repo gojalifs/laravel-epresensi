@@ -12,8 +12,8 @@
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Nama</th>
                         <th>NIK</th>
+                        <th>Nama</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
                         <th>Yang Direvisi</th>
@@ -27,8 +27,8 @@
                 <tbody>
                     @foreach ($revisian as $revisi)
                         <tr>
-                            <td>{{ $revisi->name }}</td>
                             <td>{{ $revisi->user_nik }}</td>
+                            <td>{{ $revisi->name }}</td>
                             <td>{{ $revisi->tanggal }}</td>
                             <td>{{ $revisi->jam }}</td>
                             <td>{{ $revisi->yang_direvisi }}</td>
