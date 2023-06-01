@@ -15,4 +15,9 @@
     exec($cmd3, $output3);
     echo "Output Generate Application Key: " . implode("\n", $output3) . "\n";
 
+    // Generate Application Key
+    $cmd4 = 'php artisan storage:link';
+    exec($cmd4, $output4);
+    echo "Output Generate Application Key: " . implode("\n", $output4) . "\n";
+
 ?>

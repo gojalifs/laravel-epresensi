@@ -7,10 +7,12 @@ use App\Models\Admin;
 use App\Models\Password;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class WebUserController extends Controller
 {
@@ -40,32 +42,43 @@ class WebUserController extends Controller
 
     public function add(Request $request)
     {
-        $request->validate([
-            'nama' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'gender' => 'required',
-            'telp' => 'required',
-            'password' => 'required',
-            'is_admin' => 'nullable',
-        ]);
+        try {
+            $request->validate([
+                'nama' => 'required',
+                'email' => 'required|email|unique:users,email',
+                'nipns' => 'nullable|unique:users,nipns',
+                'gender' => 'required',
+                'telp' => 'required|unique:users,telp',
+                'password' => 'required',
+                'is_admin' => 'nullable',
+            ]);
 
-        $user = new User();
-        $user->nama = $request->nama;
-        $user->nipns = $request->nipns;
-        $user->email = $request->email;
-        $user->gender = $request->gender;
-        $user->telp = $request->telp;
-        $user->is_admin = 0;
-        $user->password = Hash::make($request->password);
-
-        if ($request->is_admin == 'on') {
-            $user->is_admin = 1;
-        } else {
+            $user = new User();
+            $user->nama = $request->nama;
+            $user->nipns = $request->nipns;
+            $user->email = $request->email;
+            $user->gender = $request->gender;
+            $user->telp = $request->telp;
             $user->is_admin = 0;
-        }
-        $user->save();
+            $user->password = Hash::make($request->password);
 
-        return redirect()->route('users-list')->with('success', 'User added successfully.');
+            if ($request->is_admin == 'on') {
+                $user->is_admin = 1;
+            } else {
+                $user->is_admin = 0;
+            }
+            $user->save();
+
+            return redirect()->route('users-list')->with('success', 'User added successfully.');
+        } catch (ValidationException $e) {
+            $errors = $e->validator->errors()->getMessages();
+    
+            $response = [
+                'errors' => $errors,
+            ];
+    
+            throw new HttpResponseException(response()->json($response, Response::HTTP_UNPROCESSABLE_ENTITY));
+        }
     }
 
     public function updateUser(Request $request)
