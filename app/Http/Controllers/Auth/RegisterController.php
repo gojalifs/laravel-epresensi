@@ -112,7 +112,7 @@ class RegisterController extends Controller
             ]);
     
         Password::create([
-            'user_nik' => $nik,
+            'email' => $data['email'],
             'pass' => $pass
         ]);
 
