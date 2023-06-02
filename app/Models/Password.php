@@ -13,4 +13,12 @@ class Password extends Model
         'email',
         'pass',
     ];
+
+    /**
+     * Get the user associated with the password.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
 }
