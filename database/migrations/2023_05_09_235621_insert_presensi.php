@@ -14,7 +14,7 @@ return new class extends Migration {
         CREATE DEFINER=`rudi`@`localhost` PROCEDURE `insert_presensi`(
             IN p_nik BIGINT(20),
             
-            IN p_jenis ENUM('masuk', 'keluar'),
+            IN p_jenis ENUM('masuk', 'pulang'),
             
             IN p_longitude VARCHAR(20),
             IN p_latitude VARCHAR(20),

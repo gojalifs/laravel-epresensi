@@ -12,8 +12,8 @@ return new class extends Migration {
     {
         Schema::create('passwords', function (Blueprint $table) {
             $table->id();
-            $table->string('user_nik', 20);
-            $table->foreign('user_nik')->references('nik')->on('users')
+            $table->string('email', 255);
+            $table->foreign('email')->references('email')->on('users')
                 ->onUpdate('cascade')->onDelete('cascade');
             $table->string('pass');
             $table->timestamps();

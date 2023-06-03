@@ -43,8 +43,9 @@ class WebUserController extends Controller
         $request->validate([
             'nama' => 'required',
             'email' => 'required|email|unique:users,email',
+            'nipns' => 'nullable|unique:users,nipns',
             'gender' => 'required',
-            'telp' => 'required',
+            'telp' => 'required|unique:users,telp',
             'password' => 'required',
             'is_admin' => 'nullable',
         ]);
@@ -88,10 +89,6 @@ class WebUserController extends Controller
         $gender = $request->gender;
         $telp = $request->telp;
         $password = Hash::make($request->password);
-        $is_admin = 0; // non-admin user by default
-        if ($request->is_admin == 'on') {
-            $is_admin = 1;
-        }
 
         $sqlFind = "SELECT nik FROM users WHERE nik = ?";
         $params = [$nik];
@@ -99,17 +96,14 @@ class WebUserController extends Controller
 
         if (count($findResult) === 1) {
 
-            $oldPassword = DB::select("SELECT pass FROM passwords WHERE user_nik = ? AND pass = ?", [$nik, $password]);
+            $oldPassword = DB::select("SELECT pass FROM passwords WHERE email = ? AND pass = ?", [$email, $password]);
             if (count($oldPassword) != 1) {
-                DB::update("UPDATE passwords SET pass = ? WHERE user_nik = ?", [$password, $nik]);
+                DB::update("UPDATE passwords SET pass = ? WHERE email = ?", [$email, $nik]);
             }
 
-            $sql = "UPDATE users SET nama = ?, nipns = ?, email = ?, gender = ?, telp = ?, password = ?, is_admin = ? WHERE nik = ?";
-            $params = [$nama, $nipns, $email, $gender, $telp, $password, (int) $is_admin, $nik];
-            if ($is_admin == 0) {
-                $sql = "UPDATE users SET nama = ?, nipns = ?, email = ?, gender = ?, telp = ?, password = ?, is_admin = ? WHERE nik = ?";
-                $params = [$nama, $nipns, $email, $gender, $telp, null, (int) $is_admin, $nik];
-            }
+            $sql = "UPDATE users SET nama = ?, nipns = ?, email = ?, gender = ?, telp = ?, password = ? WHERE nik = ?";
+            $params = [$nama, $nipns, $email, $gender, $telp, $password, (int) $nik];
+
             try {
                 $affectedRows = DB::update($sql, $params);
             } catch (\Exception $e) {

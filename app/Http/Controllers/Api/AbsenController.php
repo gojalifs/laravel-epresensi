@@ -40,10 +40,10 @@ class AbsenController extends Controller
         $absens = DB::table('ketidakhadirans')->where('nik', '=', $nik)
             ->get()->toArray();
 
-        // Jika tidak ada absensi dengan user_nik tersebut, maka tampilkan pesan error 404
-        if (!$absens) {
-            abort(404, 'Absen Not Found');
-        }
+        // // Jika tidak ada absensi dengan user_nik tersebut, maka tampilkan pesan error 404
+        // if (!$absens) {
+        //     abort(404, 'Absen Not Found');
+        // }
 
         // Membuat array untuk menyimpan setiap izin keluar
         $result = [];

@@ -51,8 +51,13 @@
     <h1>Laporan Bulan {{ $month }}</h1>
 
     <p>Nama : {{ $users->nama }}</p>
+    @if ($users->gender == 'P')
+        <p>Jenis Kelamin : Perempuan</p>
+    @else
+        <p>Jenis Kelamin : Laki-Laki</p>                               
+    @endif
     <p>NIK : {{ $users->nik }}</p>
-    <p>NIPNS : {{ $users->nipns }}</p>
+    <p>NIP : {{ $users->nipns }}</p>
     <p>Email : {{ $users->email }}</p>
     <p>Telp : {{ $users->telp }}</p>
 
@@ -64,10 +69,9 @@
             <tr>
                 <th>ID Presensi</th>
                 <th>Tanggal</th>
-                <th>Jenis</th>
+                <th>Keterangan</th>
                 <th>Jam</th>
-                <th>Longitude</th>
-                <th>Latitude</th>
+
             </tr>
         </thead>
         <tbody>
@@ -77,8 +81,6 @@
                     <td>{{ $item->tanggal }}</td>
                     <td>{{ $item->jenis }}</td>
                     <td>{{ $item->jam }}</td>
-                    <td>{{ $item->longitude }}</td>
-                    <td>{{ $item->latitude }}</td>
                 </tr>
             @endforeach
         </tbody>

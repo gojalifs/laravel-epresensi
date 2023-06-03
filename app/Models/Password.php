@@ -10,7 +10,15 @@ class Password extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_nik',
+        'email',
         'pass',
     ];
+
+    /**
+     * Get the user associated with the password.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
+    }
 }

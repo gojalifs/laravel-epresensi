@@ -23,7 +23,7 @@ class PresensiRequest extends FormRequest
     {
         return [
             'nik' => 'required',
-            'jenis' => 'required|in:masuk,keluar',            
+            'jenis' => 'required|in:masuk,pulang',            
             'longitude' => 'required',
             'latitude' => 'required',
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg',

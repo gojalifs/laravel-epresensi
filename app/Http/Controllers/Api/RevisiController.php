@@ -74,10 +74,10 @@ class RevisiController extends Controller
         $revisis = DB::table('revisi_absens')->where('user_nik', '=', $nik)
             ->get()->toArray();
 
-        // Jika tidak ada absensi dengan user_nik tersebut, maka tampilkan pesan error 404
-        if (!$revisis) {
-            abort(404, 'Absen Not Found');
-        }
+        // // Jika tidak ada absensi dengan user_nik tersebut, maka tampilkan pesan error 404
+        // if (!$revisis) {
+        //     abort(404, 'Absen Not Found');
+        // }
 
         // Membuat array untuk menyimpan setiap izin keluar
         $result = [];

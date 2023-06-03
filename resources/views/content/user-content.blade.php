@@ -110,6 +110,32 @@
                         }
                         var urllist = 'users-list';
                         $('#body').load(urllist);
+                    },
+                    error: function(response) {
+
+                        // Handle error response, display error messages in the modal
+                        var message = '';
+                        var errorMessage = response.responseJSON;
+                        var jsonMessage = JSON.stringify(errorMessage);
+                        console.log(jsonMessage);
+                        var errors = '';
+                        if (jsonMessage.includes('email')) {
+                            message = 'Email Sudah Dipakai';
+                        } else if (jsonMessage.includes('telp')) {
+                            message = 'Telp Sudah Dipakai';
+                        } else {
+                            message = 'NIP Sudah Dipakai';
+                        }
+
+                        alert(message);
+                        var errorList = '';
+
+                        // $.each(errors, function(field, messages) {
+                        //     errorList += '<li>' + messages[0] + '</li>';
+                        // });
+
+                        $('#errorMessages').html(errorList);
+                        $('#errorModal').modal('show');
                     }
                 });
             });
@@ -284,6 +310,7 @@
                         <th>NIK</th>
                         <th>Nama</th>
                         <th>NIP</th>
+                        <th>Status</th>
                         <th>Email</th>
                         <th>Jenis Kelamin</th>
                         <th>Telp</th>
@@ -297,6 +324,12 @@
                             <td>{{ $user->nik }}</td>
                             <td>{{ $user->nama }}</td>
                             <td>{{ $user->nipns }}</td>
+                            @if ($user->nipns == '' || !$user->nipns)
+                                <td>Honorer</td>
+                            @else
+                                <td>PNS</td>
+                                </button>
+                            @endif
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->gender }}</td>
                             <td>{{ $user->telp }}</td>
@@ -376,7 +409,7 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="text" class="form-control" id="password" name="password">
+                            <input type="text" class="form-control" id="password" name="password" minlength="8">
                         </div>
                         {{-- <div class="form-group">
                             <div class="checkbox">

@@ -31,6 +31,14 @@ class User extends Authenticatable
     ];
 
     /**
+     * Get the passwords associated with the user.
+     */
+    public function passwords()
+    {
+        return $this->hasMany(Password::class, 'email', 'email');
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
