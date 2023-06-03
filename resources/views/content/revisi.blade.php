@@ -16,7 +16,7 @@
                         <th>Nama</th>
                         <th>Tanggal</th>
                         <th>Jam</th>
-                        <th>Yang Direvisi</th>
+                        <th>Keterangan Revisi</th>
                         <th>Alasan</th>
                         <th>Bukti</th>
                         <th>Status</th>
