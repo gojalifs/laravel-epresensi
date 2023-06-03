@@ -69,9 +69,9 @@
             <tr>
                 <th>ID Presensi</th>
                 <th>Tanggal</th>
-                <th>Jenis</th>
+                <th>Keterangan</th>
                 <th>Jam</th>
-                
+
             </tr>
         </thead>
         <tbody>
