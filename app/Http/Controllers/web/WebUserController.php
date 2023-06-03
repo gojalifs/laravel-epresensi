@@ -96,9 +96,9 @@ class WebUserController extends Controller
 
         if (count($findResult) === 1) {
 
-            $oldPassword = DB::select("SELECT pass FROM passwords WHERE user_nik = ? AND pass = ?", [$nik, $password]);
+            $oldPassword = DB::select("SELECT pass FROM passwords WHERE email = ? AND pass = ?", [$email, $password]);
             if (count($oldPassword) != 1) {
-                DB::update("UPDATE passwords SET pass = ? WHERE user_nik = ?", [$password, $nik]);
+                DB::update("UPDATE passwords SET pass = ? WHERE email = ?", [$email, $nik]);
             }
 
             $sql = "UPDATE users SET nama = ?, nipns = ?, email = ?, gender = ?, telp = ?, password = ? WHERE nik = ?";
