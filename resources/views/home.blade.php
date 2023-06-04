@@ -14,9 +14,9 @@
                             </div>
                         @endif
 
-                        {{ __('Haloo. Selamat datang di aplikasi admin presensi!') }}
+                        {{ __('Haloo. Selamat datang di Aplikasi Admin presensi!') }}
                         <br>
-                        {{ __('SMP Negeri 1 Karangbahagia') }}
+                        {{ __('SMP Negeri 1 Karang bahagia') }}
                     </div>
                 </div>
             </div>
