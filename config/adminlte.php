@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'SMPN 1 Karang Bahagia',
     'title_prefix' => '',
     'title_postfix' => '',
 
