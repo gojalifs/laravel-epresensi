@@ -85,6 +85,15 @@ class RevisiController extends Controller
             $revisi->delete();
 
             $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
+            foreach ($revisian as $revisi) {
+                $name = User::where('nik', $revisi->user_nik)->value('nama');
+                $revisi->name = $name;
+                if (!empty($revisi->approval)) {
+                    $approval_name = User::where('nik', $revisi->approval)->value('nama');
+                    $revisi->approval_name = $approval_name;
+                }
+            }
+
             // return success message
             return view('content.revisi')->with('revisian', $revisian);
         } catch (\Exception $e) {
