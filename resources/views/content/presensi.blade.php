@@ -50,7 +50,7 @@
                             <th>Status</th>
                             <th>Jam</th>
                             <th>Lokasi Maps</th>
-                            <th>Foto Selfie</th>
+                            <th>Foto Wajah</th>
                         </tr>
                     </thead>
                     <tbody>

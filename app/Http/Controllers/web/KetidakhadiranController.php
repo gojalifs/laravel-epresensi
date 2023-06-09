@@ -61,6 +61,8 @@ class KetidakhadiranController extends Controller
 
             $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
             foreach ($ketidakhadiran as $item) {
+                $name = User::where('nik', $item->nik)->value('nama');
+                $item->name = $name;
                 if (!empty($item->approval_id)) {
                     $approval_name = User::where('nik', $item->approval_id)->value('nama');
                     $item->approval_name = $approval_name;
@@ -84,8 +86,10 @@ class KetidakhadiranController extends Controller
 
             $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
             foreach ($ketidakhadiran as $item) {
+                $name = User::where('nik', $item->nik)->value('nama');
+                $item->name = $name;
                 if (!empty($item->approval_id)) {
-                    $approval_name = User::where('nik', $nik)->value('nama');
+                    $approval_name = User::where('nik', $item->approval_id)->value('nama');
                     $item->approval_name = $approval_name;
                 }
             }

@@ -279,12 +279,12 @@
 @section('user-content')
     <div class="card" id="body">
         <div class="card-header">
-            <h3 class="card-title">Daftar User</h3>
+            <h3 class="card-title">Daftar Guru</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body">
             <div class="form-group">
-                <label for="search">Search by Name or NIK:</label>
+                <label for="search">Cari berdasarkan Nama atau NIK:</label>
             </div>
             <div class="row">
                 <div class="col-md-6">
@@ -294,7 +294,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <button class="btn btn-secondary" id="reset-btn">Reset</button>
+                        <button class="btn btn-secondary" id="reset-btn">Hapus Pencarian</button>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -390,7 +390,7 @@
                             <input type="text" class="form-control" id="nipns" name="nipns">
                         </div>
                         <div class="form-group">
-                            <label>Gender</label><br>
+                            <label>Jenis Kelamin</label><br>
                             <div>
                                 <input type="radio" id="L" name="gender" value="L">
                                 <label for="L">L</label><br>
@@ -408,7 +408,7 @@
                             <input type="text" class="form-control" id="telp" name="telp" required>
                         </div>
                         <div class="form-group">
-                            <label for="password">Password</label>
+                            <label for="password">Kata Sandi</label>
                             <input type="text" class="form-control" id="password" name="password" minlength="8">
                         </div>
                         {{-- <div class="form-group">

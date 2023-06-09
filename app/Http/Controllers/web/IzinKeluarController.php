@@ -61,6 +61,10 @@ class IzinKeluarController extends Controller
             $izin_keluars = IzinKeluar::all();
             // return success message
             foreach ($izin_keluars as $item) {
+                if (!empty($item->user_nik)) {
+                    $name = User::where('nik', $item->user_nik)->value('nama');
+                    $item->name = $name;
+                }
                 if (!empty($item->approval)) {
                     $approval_name = User::where('nik', $item->approval)->value('nama');
                     $item->approval_name = $approval_name;
@@ -81,6 +85,16 @@ class IzinKeluarController extends Controller
             $revisi->delete();
 
             $izin_keluars = IzinKeluar::all();
+            foreach ($izin_keluars as $item) {
+                if (!empty($item->user_nik)) {
+                    $name = User::where('nik', $item->user_nik)->value('nama');
+                    $item->name = $name;
+                }
+                if (!empty($item->approval)) {
+                    $approval_name = User::where('nik', $item->approval)->value('nama');
+                    $item->approval_name = $approval_name;
+                }
+            }
             // return success message
             return view('content.izin-keluar')->with('izin_keluars', $izin_keluars);
         } catch (\Exception $e) {
