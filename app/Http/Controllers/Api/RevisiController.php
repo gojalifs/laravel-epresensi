@@ -32,7 +32,7 @@ class RevisiController extends Controller
 
             $nik = $request->input('user_nik');
             $tanggal = date("Y-m-d", strtotime("today"));
-            $jam = date("H:i:s");
+            $jam = date("H-i-s");
 
             $name = User::where('nik', $nik)->value('nama');
             $nama = str_replace(' ', '_', $name);
