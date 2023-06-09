@@ -22,7 +22,7 @@ class RevisiController extends Controller
     public function index()
     {
         try {
-            $revisian = RevisiAbsen::all()->sortDesc();
+            $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
 
             foreach ($revisian as $revisi) {
                 $name = User::where('nik', $revisi->user_nik)->value('nama');
