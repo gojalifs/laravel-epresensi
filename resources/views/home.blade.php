@@ -1,32 +1,88 @@
 @extends('layouts.adminlte')
 
 @section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }}</div>
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>Dashboard</h1>
+    </section>
 
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        {{ __('Haloo. Selamat datang di aplikasi admin presensi!') }}
-                        <br>
-                        {{ __('SMP Negeri 1 Karangbahagia') }}
+    <!-- Main content -->
+    <section class="content">
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- Jumlah Guru PNS -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>{{ $user }}</h3>
+                        <p>Jumlah Total Guru/Admin</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Jumlah Guru PNS -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>{{ $jumlahGuruPNS }}</h3>
+                        <p>Jumlah Guru PNS</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Jumlah Guru Honorer -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>{{ $jumlahGuruHonorer }}</h3>
+                        <p>Jumlah Guru Honorer</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Jumlah Guru Sudah Absen Hari Ini -->
+                <div class="small-box bg-blue">
+                    <div class="inner">
+                        <h3>{{ $jumlahSudahAbsen }}</h3>
+                        <p>Jumlah Guru Sudah Absen Hari Ini</p>
+                    </div>
+                    <div class="icon">
+                        <i class="far fa-calendar-check"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Jumlah Guru Belum Absen Hari Ini -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>{{ $jumlahBelumAbsen }}</h3>
+                        <p>Jumlah Guru Belum Absen Hari Ini</p>
+                    </div>
+                    <div class="icon">
+                        <i class="far fa-calendar-times"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <!-- Persentase Absensi Hari Ini -->
+                <div class="small-box bg-orange">
+                    <div class="inner">
+                        <h3>{{ $persentaseAbsensi }}%</h3>
+                        <p>Persentase Absensi Hari Ini</p>
+                    </div>
+                    <div class="icon">
+                        <i class="far fa-calendar-times"></i>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-@endsection
-
-@section('user-content')
-    <div class="card">
-        
-    </div>
-    <!-- /.card -->
+    </section>
+    
+    <!-- /.content -->
 @endsection
