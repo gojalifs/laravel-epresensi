@@ -8,6 +8,12 @@
 
     <!-- Main content -->
     <section class="content">
+        <div style="background-color: lightgreen; padding: 10px;">
+            <span style="font-weight: bold; color: green;">
+                {{ __('Haloo. Selamat datang di aplikasi admin presensi') }}
+            </span>
+        </div>
+        <br>
         <div class="row">
             <div class="col-lg-4">
                 <!-- Jumlah Guru PNS -->
@@ -83,6 +89,6 @@
             </div>
         </div>
     </section>
-    
+
     <!-- /.content -->
 @endsection
