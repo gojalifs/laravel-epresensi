@@ -95,7 +95,7 @@
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
                 <th>Alasan</th>
-                <th>Potong Cuti</th>
+                <!-- <th>Potong Cuti</th> -->
                 <th>Jenis Cuti</th>
                 <th>Status</th>
                 <th>Persetujuan</th>
@@ -108,7 +108,7 @@
                     <td>{{ $item->tanggal }}</td>
                     <td>{{ $item->tanggal_selesai }}</td>
                     <td>{{ $item->alasan }}</td>
-                    <td>{{ $item->potong_cuti }}</td>
+                    <!-- <td>{{ $item->potong_cuti }}</td> -->
                     <td>{{ $item->jenis_cuti }}</td>
                     <td>{{ $item->status }}</td>
                     <td>{{ $item->approval }}</td>

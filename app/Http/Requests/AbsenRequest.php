@@ -25,7 +25,7 @@ class AbsenRequest extends FormRequest
             'nik' => 'required',
             'tanggal' => 'required',
             'tanggal_selesai' => 'nullable',
-            'potong_cuti' => 'required',
+            'potong_cuti' => 'nullable',
             'alasan' => 'required',
             'jenis_cuti' => 'required'
         ];

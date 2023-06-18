@@ -17,7 +17,7 @@
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
                         <th>Alasan</th>
-                        <th>Potong Cuti</th>
+                        <!-- <th>Potong Cuti</th> -->
                         <th>Jenis Cuti</th>
                         <th>Status</th>
                         <th>Persetujuan</th>
@@ -32,7 +32,7 @@
                             <td>{{ $ketidakhadiran->tanggal }}</td>
                             <td>{{ $ketidakhadiran->tanggal_selesai }}</td>
                             <td>{{ $ketidakhadiran->alasan }}</td>
-                            <td>{{ $ketidakhadiran->potong_cuti }}</td>
+                            <!-- <td>{{ $ketidakhadiran->potong_cuti }}</td> -->
                             <td>{{ $ketidakhadiran->jenis_cuti }}</td>
                             <td>{{ $ketidakhadiran->status == 1 ? 'Disetujui' : ($ketidakhadiran->status == 2 ? 'Ditolak' : 'Belum Disetujui') }}
                             </td>
