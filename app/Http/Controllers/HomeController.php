@@ -40,7 +40,7 @@ class HomeController extends Controller
         $jumlahBelumAbsen = User::count() - $jumlahSudahAbsen;
 
         $totalGuru = User::count();
-        $persentaseAbsensi = ($jumlahSudahAbsen / $totalGuru) * 100;
+        $persentaseAbsensi = number_format(($jumlahSudahAbsen / $totalGuru) * 100, 1);
 
         $grafikLabel = [];
         $grafikAbsensiMasuk = [];
