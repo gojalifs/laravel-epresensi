@@ -29,6 +29,7 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/dashboard', [App\Http\Controllers\web\DashboardController::class, 'index']);
+Route::get('/about', [App\Http\Controllers\web\AboutController::class, 'index']);
 
 Route::get('/users-list', [App\Http\Controllers\web\WebUserController::class, 'index'])->name('users-list');
 Route::post('/users/search', [App\Http\Controllers\web\WebUserController::class, 'search'])->name('users.search');

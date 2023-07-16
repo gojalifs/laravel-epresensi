@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ asset('AdminLTE-3.2.0/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('AdminLTE-3.2.0/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3.2.0/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('AdminLTE-3.2.0/dist/js/adminlte.min.js') }}"></script>
@@ -32,6 +33,11 @@
             </ul>
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="dropdown-item about" href="about">
+                        Tentang
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
@@ -73,16 +79,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-                             with font-awesome or any other icon font library -->
-                        {{-- <li class="nav-item">
-                            <a href="dashboard" class="nav-link">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p>
-                                    Dashboard
-                                </p>
-                            </a>
-                        </li> --}}
+
                         <li class="nav-item">
                             <a href="users-list" class="nav-link">
                                 <i class="nav-icon fas fa-users"></i>
@@ -198,6 +195,12 @@
         });
 
         $(document).ready(function() {
+            $('.about').click(function(event) {
+                event.preventDefault();
+                var url = $(this).attr('href');
+                $('#mainContent').load(url);
+                $('#title').load(url);
+            });
             $('.nav-link').click(function(event) {
                 event.preventDefault();
                 var url = $(this).attr('href');
