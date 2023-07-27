@@ -19,10 +19,12 @@ class KetidakhadiranController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
-        $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
+        $tanggal = $request->input('date') ?? date('Y-m-d');
+        $ketidakhadiran = Ketidakhadiran::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
         $nik = Auth::user()->nik;
+
 
         foreach ($ketidakhadiran as $item) {
             $name = User::where('nik', $item->nik)->value('nama');
@@ -33,7 +35,10 @@ class KetidakhadiranController extends Controller
             }
         }
 
-        return view('content.ketidakhadiran', ['ketidakhadiran' => $ketidakhadiran]);
+        return view('content.ketidakhadiran', [
+            'ketidakhadiran' => $ketidakhadiran,
+            'tanggal' => $tanggal,
+        ]);
     }
 
 
@@ -54,12 +59,13 @@ class KetidakhadiranController extends Controller
             }
 
             // set approval to the name of the user who approves/rejects the request
+            $tanggal = $request->input('date') ?? date('Y-m-d');
             $nik = Auth::user()->nik;
             $approval_name = Auth::user()->nama;
             $ketidakhadiran->approval_id = $nik;
             $ketidakhadiran->save();
 
-            $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
+            $ketidakhadiran = Ketidakhadiran::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
             foreach ($ketidakhadiran as $item) {
                 $name = User::where('nik', $item->nik)->value('nama');
                 $item->name = $name;
@@ -69,14 +75,18 @@ class KetidakhadiranController extends Controller
                 }
             }
             // return success message
-            return view('content.ketidakhadiran', ['ketidakhadiran' => $ketidakhadiran, 'approval_name' => $approval_name]);
+            return view('content.ketidakhadiran', [
+                'ketidakhadiran' => $ketidakhadiran,
+                'approval_name' => $approval_name,
+                'tanggal' => $tanggal,
+            ]);
 
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
         }
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         try {
             $nik = Auth::user()->nik;
@@ -84,7 +94,8 @@ class KetidakhadiranController extends Controller
             $ketidakhadiran = Ketidakhadiran::findOrFail($id);
             $ketidakhadiran->delete();
 
-            $ketidakhadiran = Ketidakhadiran::all()->sortDesc();
+            $tanggal = $request->input('date') ?? date('Y-m-d');
+            $ketidakhadiran = Ketidakhadiran::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
             foreach ($ketidakhadiran as $item) {
                 $name = User::where('nik', $item->nik)->value('nama');
                 $item->name = $name;
@@ -94,7 +105,7 @@ class KetidakhadiranController extends Controller
                 }
             }
             // return success message
-            return view('content.ketidakhadiran')->with('ketidakhadiran', $ketidakhadiran);
+            return view('content.ketidakhadiran', ['tanggal' => $tanggal])->with('ketidakhadiran', $ketidakhadiran);
         } catch (\Exception $e) {
             // return error message if data not found or cannot be deleted
             return response()->json(['message' => $e->getMessage()], 500);
