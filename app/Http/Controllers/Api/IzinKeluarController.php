@@ -31,11 +31,15 @@ class IzinKeluarController extends Controller
         return $this->sendResponse($data, 'success');
     }
 
-    public function show(int $nik)
+    public function show(int $nik, Request $request)
     {
+        $month = $request->input('month');
         // Query untuk mengambil seluruh data izin keluar berdasarkan user_nik tertentu
-        $izins = DB::table('izin_keluars')->where('user_nik', '=', $nik)
-            ->get()->toArray();
+        $izins = DB::table('izin_keluars')
+            ->where('user_nik', '=', $nik)
+            ->whereMonth('tanggal', '=', $month)
+            ->get()
+            ->toArray();
 
         // // Jika tidak ada izin keluar dengan user_nik tersebut, maka tampilkan pesan error 404
         // if (!$izins) {

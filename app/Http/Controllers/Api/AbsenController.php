@@ -33,11 +33,12 @@ class AbsenController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $nik)
+    public function show(int $nik, Request $request)
     {
         // Query untuk mengambil seluruh data izin keluar berdasarkan user_nik tertentu
 
-        $absens = DB::table('ketidakhadirans')->where('nik', '=', $nik)
+        $month = $request->input('month');
+        $absens = DB::table('ketidakhadirans')->where('nik', '=', $nik)->whereMonth('tanggal', '=', $month)
             ->get()->toArray();
 
         // // Jika tidak ada absensi dengan user_nik tersebut, maka tampilkan pesan error 404
