@@ -19,10 +19,11 @@ class IzinKeluarController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
-        $izin_keluars = IzinKeluar::all()->sortDesc();
-        
+        $tanggal = $request->input('date') ?? date('Y-m-d');
+        $izin_keluars = IzinKeluar::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
+
         foreach ($izin_keluars as $item) {
             if (!empty($item->user_nik)) {
                 $name = User::where('nik', $item->user_nik)->value('nama');
@@ -33,7 +34,7 @@ class IzinKeluarController extends Controller
                 $item->approval_name = $approval_name;
             }
         }
-        return view('content.izin-keluar')->with('izin_keluars', $izin_keluars);
+        return view('content.izin-keluar', compact('tanggal'))->with('izin_keluars', $izin_keluars);
     }
 
     public function update(Request $request, $id)
@@ -58,7 +59,8 @@ class IzinKeluarController extends Controller
 
             $izin_keluar->save();
 
-            $izin_keluars = IzinKeluar::all();
+            $tanggal = $request->input('date') ?? date('Y-m-d');
+            $izin_keluars = IzinKeluar::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
             // return success message
             foreach ($izin_keluars as $item) {
                 if (!empty($item->user_nik)) {
@@ -70,21 +72,23 @@ class IzinKeluarController extends Controller
                     $item->approval_name = $approval_name;
                 }
             }
-            
-            return view('content.izin-keluar')->with('izin_keluars', $izin_keluars);
+
+        return view('content.izin-keluar', compact('tanggal'))->with('izin_keluars', $izin_keluars);
 
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
         }
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         try {
             $revisi = IzinKeluar::findOrFail($id);
             $revisi->delete();
 
-            $izin_keluars = IzinKeluar::all();
+            $tanggal = $request->input('date') ?? date('Y-m-d');
+            $izin_keluars = IzinKeluar::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
+            
             foreach ($izin_keluars as $item) {
                 if (!empty($item->user_nik)) {
                     $name = User::where('nik', $item->user_nik)->value('nama');
@@ -96,7 +100,7 @@ class IzinKeluarController extends Controller
                 }
             }
             // return success message
-            return view('content.izin-keluar')->with('izin_keluars', $izin_keluars);
+        return view('content.izin-keluar', compact('tanggal'))->with('izin_keluars', $izin_keluars);
         } catch (\Exception $e) {
             // return error message if data not found or cannot be deleted
             return response()->json(['message' => $e->getMessage()], 500);
