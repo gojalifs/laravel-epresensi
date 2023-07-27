@@ -141,13 +141,16 @@
         $('.btn-setujui').on('click', function(e) {
             e.preventDefault();
 
+            var tanggal = $('#tanggal').val();
+
             var id = $(this).data('id');
             $.ajax({
                 url: '/revisi/' + id,
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    is_approved: 'approved'
+                    is_approved: 'approved',
+                    date: tanggal,
                 },
                 success: function(data) {
                     $('#body').html(data);
@@ -164,13 +167,15 @@
     $(document).ready(function() {
 
         $('.btn-tolak').on('click ', function() {
+            var tanggal = $('#tanggal').val();
             var id = $(this).data('id');
             $.ajax({
                 url: '/revisi/' + id,
                 type: 'POST',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    is_approved: 'rejected'
+                    is_approved: 'rejected',
+                    date: tanggal,
                 },
                 success: function(data) {
                     $('#body').html(data);
@@ -179,6 +184,8 @@
         });
 
         $('.btn-hapus').on('click', function() {
+            var tanggal = $('#tanggal').val();
+
             var id = $(this).data('id');
             if (confirm("Apakah Anda yakin ingin menghapus revisi ini?")) {
                 $.ajax({
@@ -186,7 +193,8 @@
                     type: 'POST',
                     data: {
                         _method: 'DELETE',
-                        _token: '{{ csrf_token() }}'
+                        _token: '{{ csrf_token() }}',
+                        date: tanggal,
                     },
                     success: function(data) {
                         $('#body').html(data);

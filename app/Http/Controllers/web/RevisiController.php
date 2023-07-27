@@ -80,12 +80,14 @@ class RevisiController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         try {
+            $tanggal = $request->input('date') ?? date('Y-m-d');
             $revisi = RevisiAbsen::findOrFail($id);
             $revisi->delete();
 
+            $revisian = RevisiAbsen::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
             $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
             foreach ($revisian as $revisi) {
                 $name = User::where('nik', $revisi->user_nik)->value('nama');
