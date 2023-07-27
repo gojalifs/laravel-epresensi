@@ -7,6 +7,25 @@
         <div class="card-header">
             <h3 class="card-title">Permintaan Revisi Absen</h3>
         </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="" method="GET" id="form-presensi">
+                        <div class="form-group row mt-3">
+                            <label for="tanggal" class="col-md-1 col-form-label text-md-right">Tanggal</label>
+                            <div class="col-md-3">
+                                <input type="date" name="tanggal" id="tanggal" class="form-control"
+                                    value="{{ $tanggal }}">
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary" id="daily">Tampilkan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- /.card-header -->
         <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
@@ -49,7 +68,7 @@
                                 <button class="btn btn-maroon btn-hapus" data-id="{{ $revisi->id }}">Hapus</button>
                             </td>
                         </tr>
-                        
+
                         <!-- Modal -->
                         <div class="modal fade" id="imageModal" tabindex="-1" role="dialog"
                             aria-labelledby="imageModalLabel{{ $revisi->id }}" aria-hidden="true">
@@ -81,6 +100,25 @@
     </div>
     <!-- /.card -->
 @stop
+
+<script>
+    $('#form-presensi').on('submit', function(e) {
+        e.preventDefault();
+        var tanggal = $('#tanggal').val();
+
+        $.ajax({
+            url: "/revisi",
+            type: 'GET',
+            data: {
+                date: tanggal
+            },
+            success: function(data) {
+                $('#body').empty();
+                $('#body').html(data);
+            }
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {

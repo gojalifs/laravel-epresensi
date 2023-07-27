@@ -19,10 +19,11 @@ class RevisiController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
+            $tanggal = $request->input('date') ?? date('Y-m-d');
+            $revisian = RevisiAbsen::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
 
             foreach ($revisian as $revisi) {
                 $name = User::where('nik', $revisi->user_nik)->value('nama');
@@ -32,7 +33,7 @@ class RevisiController extends Controller
                     $revisi->approval_name = $approval_name;
                 }
             }
-            return view('content.revisi')->with('revisian', $revisian);
+            return view('content.revisi', compact('tanggal'))->with('revisian', $revisian);
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -44,6 +45,7 @@ class RevisiController extends Controller
         try {
             $revisi = RevisiAbsen::findOrFail($id);
             $is_approved = $request->input('is_approved');
+            $tanggal = $request->input('date') ?? date('Y-m-d');
 
             // set is_approved to 1 if approved, set to 2 if rejected
             if ($is_approved === 'approved') {
@@ -61,7 +63,7 @@ class RevisiController extends Controller
 
             $revisi->save();
 
-            $revisian = RevisiAbsen::orderByDesc('tanggal')->get();
+            $revisian = RevisiAbsen::where('tanggal', '=', $tanggal)->orderByDesc('tanggal')->get();
             foreach ($revisian as $revisi) {
                 $name = User::where('nik', $revisi->user_nik)->value('nama');
                 $revisi->name = $name;
@@ -71,7 +73,7 @@ class RevisiController extends Controller
                 }
             }
             // return success message
-            return view('content.revisi')->with('revisian', $revisian);
+            return view('content.revisi', compact('tanggal'))->with('revisian', $revisian);
 
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
@@ -95,7 +97,7 @@ class RevisiController extends Controller
             }
 
             // return success message
-            return view('content.revisi')->with('revisian', $revisian);
+            return view('content.revisi', compact('tanggal'))->with('revisian', $revisian);
         } catch (\Exception $e) {
             // return error message if data not found or cannot be deleted
             return response()->json(['message' => $e->getMessage()], 500);
