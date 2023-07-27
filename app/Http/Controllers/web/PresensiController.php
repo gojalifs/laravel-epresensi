@@ -100,7 +100,7 @@ class PresensiController extends Controller
                 $query->whereDate('tanggal', '<=', $tanggalFormatted)
                     ->whereDate('tanggal_selesai', '>=', $tanggalFormatted);
             })
-            ->orWhereMonth('tanggal', 5)
+            ->orWhereMonth('tanggal', $bulan)
             ->get();
 
         foreach ($leaves as $leave) {
